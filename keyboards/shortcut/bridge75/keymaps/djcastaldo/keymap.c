@@ -2911,6 +2911,21 @@ void leader_end_user(void) {
     else if (leader_sequence_four_keys(KC_T, KC_T, KC_Y, KC_L)) {  // talk to you later
         SEND_STRING("talk to you later");
     }
+    else if (leader_sequence_four_keys(KC_G, KC_I, KC_T, KC_L)) {        // git log
+        SEND_STRING("git log\n");
+    }
+    else if (leader_sequence_four_keys(KC_G, KC_I, KC_T, KC_A)) {        // git add
+        SEND_STRING("git add -A\n");
+    }
+    else if (leader_sequence_four_keys(KC_G, KC_I, KC_T, KC_C)) {        // git commit
+        SEND_STRING("git commit -m \"\"" SS_TAP(X_LEFT));
+    }
+    else if (leader_sequence_four_keys(KC_G, KC_I, KC_T, KC_P)) {        // git push
+        SEND_STRING("git push\n");
+    }
+    else if (leader_sequence_five_keys(KC_G, KC_I, KC_T, KC_C, KC_O)) {  // git checkout .
+        SEND_STRING("git checkout .\n");
+    }
     else if (leader_sequence_three_keys(KC_Q, KC_C, KC_B)) {  // qmk compile shortcutstudio bridge75 firmware
         SEND_STRING("qmk compile -kb shortcut/bridge75 -km djcastaldo" SS_TAP(X_ENT));
     }
