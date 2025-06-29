@@ -1,12 +1,13 @@
+// 05-15-2025 @davex
 // Copyright 2024 Wind (@yelishang)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
 
+#define RGB_MATRIX_TIMEOUT 600000
 #ifdef WIRELESS_ENABLE
 #    define LPWR_TIMEOUT RGB_MATRIX_TIMEOUT
 #    define WLS_KEYBOARD_REPORT_KEYS 5
-
 #endif
 
 #define USB_POWER_EN_PIN A14
@@ -36,3 +37,26 @@
 #define WS2812_T1H 900       // “1”位的高相位长度纳秒
 #define WS2812_T0H 350       // “0”位的高相位长度纳秒
 #define WS2812_TRST_US 280   // 重置阶段的长度微秒
+
+#define TAPPING_TERM 250
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define DYNAMIC_MACRO_NO_NESTING
+#define TAPPING_TERM_PER_KEY
+
+#define MK_3_SPEED
+#define MK_C_OFFSET_0 1
+#define MK_C_INTERVAL_0 6
+#define MK_C_OFFSET_1 4
+#define MK_C_INTERVAL_1 8
+
+#define LEADER_TIMEOUT 200
+#define LEADER_PER_KEY_TIMING
+#define LEADER_NO_TIMEOUT
+
+#define RGB_MATRIX_DEFAULT_ON true
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_BAND_VAL
+#define RGB_MATRIX_DEFAULT_HUE 170
+#define RGB_MATRIX_DEFAULT_SAT 255
+#define RGB_MATRIX_DEFAULT_VAL 220
+#define RGB_MATRIX_DEFAULT_SPD 80
+
