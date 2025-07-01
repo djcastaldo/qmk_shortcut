@@ -115,6 +115,9 @@ enum custom_keycodes {
     SUP3,
     NBSP,
     WM_SYM,
+    STHRU,
+    UNDERLN,
+    BARTEXT,
     COLORTEST,
     FLASH_KB,
     BOOTLDR
@@ -411,11 +414,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :   ______________________________________________________________________________________________________________________________   :
 //  :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||LLock |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-//  :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||      |  :
+//  :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||BarTxt|  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-//  :  |             ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||               ||      |  :
+//  :  |             ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||               ||SThru |  :
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-//  :  |                 ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||           ||      ||      |  :
+//  :  |                 ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||           ||      ||UnderL|  :
 //  :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 //  :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
@@ -423,9 +426,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [WIDE_TEXT_LAYR] = LAYOUT_ansi(
         _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,
         LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,    LLOCK,
-        _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______,
-        _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
-        _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, _______,
+        _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    BARTEXT,
+        _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,     STHRU,
+        _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, UNDERLN,
         _______,  _______,  _______,                        LTRANS,                      _______,  _______,  _______, _______, _______
     ),
 
@@ -508,6 +511,7 @@ enum key_indexes {
     I_MREC1 = 40,
     I_MREC2 = 41,
     I_ENDPGUP = 43,
+    I_BARTEXT = 43,
     I_CAPS = 44,
     I_A = 45,
     I_S = 46,
@@ -523,6 +527,7 @@ enum key_indexes {
     I_FJLIGHT = 55,
     I_HROWLIGHT = 56,
     I_PGUPPGDN = 57,
+    I_STHRU = 57,
     I_LSFT = 58,
     I_Z = 59,
     I_X = 60,
@@ -538,6 +543,7 @@ enum key_indexes {
     I_RSFT = 69,
     I_UP = 70,
     I_PGDNEND = 71,
+    I_UNDERLN = 71,
     I_LCTL = 72,
     I_LGUI = 73,
     I_LOPT = 73,
@@ -734,6 +740,12 @@ int winkey_scut_altcolor[] = {I_MIN, I_PLUS, I_T, I_U, I_I, I_P, I_S, I_F, I_G, 
 int winkey_scut_keys_size = sizeof(winkey_scut_keys) / sizeof(winkey_scut_keys[0]);
 int winkey_scut_altcolor_size = sizeof(winkey_scut_altcolor) / sizeof(winkey_scut_altcolor[0]);
 
+// for tracking wide-text options for the WIDE_TEXT_LAYR
+bool wide_sthru = false;
+bool wide_underln = false;
+bool wide_bartext = false;
+bool wide_firstchar = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
     // stop color test if active and a key is pressed
@@ -809,6 +821,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             else if (layer == MAC_SYMBOL_LAYR) {
                 register_code(KC_LOPT);
             }
+            // for some wide modes, should start with the spacing char
+            if (layer == WIDE_TEXT_LAYR && wide_firstchar) {
+                if (wide_bartext) {
+                    tap_code16(KC_PIPE);
+                }
+                else if (wide_sthru) {
+                    tap_code16(KC_MINS);
+                }
+                else if (wide_underln) {
+                    tap_code16(KC_UNDS);
+                }
+                wide_firstchar = false;
+            }
             // send keydown from the default layer
             register_code(keymap_key_to_keycode(biton32(default_layer_state), record->event.key));
             // release option for MAC_SYMBOL_LAYR
@@ -817,7 +842,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             // if WIDE_TEXT_LAYER, add the extra spacing char
             else if (layer == WIDE_TEXT_LAYR) {
-                tap_code(KC_SPC);
+                if (wide_bartext) {
+                    tap_code16(KC_PIPE);
+                }
+                else if (wide_sthru) {
+                    tap_code16(KC_MINS);
+                }
+                else if (wide_underln) {
+                    tap_code16(KC_UNDS);
+                }
+                else {
+                    tap_code16(KC_SPC);
+                }
             }
         }
         else {
@@ -1416,6 +1452,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             symbol_key("0160","0166");
         }
         break;
+    case STHRU:
+        if (record->event.pressed) {
+            if (wide_sthru) {
+                wide_sthru = false;
+                wide_firstchar = false;
+            }
+            else {
+                wide_bartext = false;
+                wide_sthru = true;
+                wide_underln = false;
+                wide_firstchar = true;
+            }
+        }
+        break;
+    case UNDERLN:
+        if (record->event.pressed) {
+            if (wide_underln) {
+                wide_underln = false;
+                wide_firstchar = false;
+            }
+            else {
+                wide_bartext = false;
+                wide_sthru = false;
+                wide_underln = true;
+                wide_firstchar = true;
+            }
+        }
+        break;
+    case BARTEXT:
+        if (record->event.pressed) {
+            if (wide_bartext) {
+                wide_bartext = false;
+                wide_firstchar = false;
+            }
+            else {
+                wide_bartext = true;
+                wide_sthru = false;
+                wide_underln = false;
+                wide_firstchar = true;
+            }
+        }
+        break;
     case FLASH_KB:
         if (record->event.pressed) {
            // command to flash this keyboard
@@ -1573,7 +1651,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         rgb_matrix_set_color(I_INDICATOR, RGB_BLUE);
         break;
     case WIDE_TEXT_LAYR:
-        rgb_matrix_set_color(I_INDICATOR, RGB_CORAL);
+        rgb_matrix_set_color(I_INDICATOR, RGB_YELLOW);
         break;
     case LOCK_LAYR:
         break;
@@ -1608,6 +1686,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                     case SYMBOL_LAYR:
                     case MAC_SYMBOL_LAYR:
                         rgb_matrix_set_color(index, RGB_BLUE);
+                        break;
+                    case WIDE_TEXT_LAYR:
+                        rgb_matrix_set_color(index, RGB_YELLOW);
                         break;
                     case LOCK_LAYR:
                         break;
@@ -1688,11 +1769,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 layer_lock_timer = timer_read();
             }
             if (is_layer_lock_led_on) {
-                rgb_matrix_set_color(I_LLOCK, RGB_WHITE); // just make it white 
+                rgb_matrix_set_color(I_LLOCK, 0x77, 0x77, 0x77); // just make it white 
             }
             else if ((timer_elapsed(layer_lock_timer) > 200 && timer_elapsed(layer_lock_timer) < 400) || 
                      (timer_elapsed(layer_lock_timer) > 600)) {
-                rgb_matrix_set_color(I_LLOCK, RGB_WHITE); // white alternate with layer color 
+                rgb_matrix_set_color(I_LLOCK, 0x77, 0x77, 0x77); // white alternate with layer color 
             }
         }
     }
@@ -1966,6 +2047,18 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (act_char_led_index > 0) {
         rgb_matrix_set_color(act_char_led_index, RGB_WHITE);  // accent char led 
     } 
+    // track mode keys on WIDE_TEXT_LAYR
+    if (layer == WIDE_TEXT_LAYR) {
+        if (wide_bartext) {
+            rgb_matrix_set_color(I_BARTEXT, 0x77, 0x77, 0x77);  // bartext toggle
+        }
+        else if (wide_sthru) {
+            rgb_matrix_set_color(I_STHRU, 0x77, 0x77, 0x77);    // sthru toggle
+        }
+        else if (wide_underln) {
+            rgb_matrix_set_color(I_UNDERLN, 0x77, 0x77, 0x77);  // underln toggle
+        }
+    }
     // track caps_lock
     if (host_keyboard_led_state().caps_lock) {
         rgb_matrix_set_color(I_CAPS, 0x77, 0x77, 0x77);  // caps
@@ -2001,6 +2094,7 @@ bool key_should_fade(keytracker key, uint8_t layer) {
       (is_in_leader_sequence && key.index == I_L) ||                                                             // leader key
       (layer == SFT_LAYR && key.index == I_NUMLOCK) ||                                                           // num lock key
       (layer == FN_LAYR && key.index == I_SLOCK) ||                                                              // scroll lock
+      (layer == WIDE_TEXT_LAYR && (key.index == I_BARTEXT || key.index == I_STHRU || key.index == I_UNDERLN)) || // wide-text mode toggles
       (layer == CTL_LAYR && (key.index == I_FJLIGHT || key.index == I_HROWLIGHT)) ||                             // hrow/fj indicators 
       (macwin_changed) ||                                                                                        // mac/win base change
       (layer == SYMBOL_LAYR && (key.index == I_GRV || key.index == I_1 || key.index == I_E ||
