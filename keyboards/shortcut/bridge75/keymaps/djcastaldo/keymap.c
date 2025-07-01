@@ -26,6 +26,7 @@ enum layers {
     TMUX_LAYR,
     SYMBOL_LAYR,
     MAC_SYMBOL_LAYR,
+    WIDE_TEXT_LAYR,
     LOCK_LAYR
 };
 
@@ -400,6 +401,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
         KC_LSFT,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    KC_RSFT, _______, _______,
         _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
+    ),
+
+//  [WIDE_TEXT_LAYR] (blue)
+//  ,------------------------------------------------------------------------------------------------------------------------------------,
+//  :   ______      ______________________________      ______________________________      ______________________________      ______   :
+//  :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      |  :
+//  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
+//  :   ______________________________________________________________________________________________________________________________   :
+//  :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||LLock |  :
+//  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
+//  :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||      |  :
+//  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
+//  :  |             ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||               ||      |  :
+//  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
+//  :  |                 ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||           ||      ||      |  :
+//  :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
+//  :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
+//  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
+//  `------------------------------------------------------------------------------------------------------------------------------------`
+    [WIDE_TEXT_LAYR] = LAYOUT_ansi(
+        _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,
+        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,    LLOCK,
+        _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______,
+        _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
+        _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, _______,
+        _______,  _______,  _______,                        LTRANS,                      _______,  _______,  _______, _______, _______
     ),
 
 //  [LOCK_LAYR]
@@ -787,6 +814,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // release option for MAC_SYMBOL_LAYR
             if (layer == MAC_SYMBOL_LAYR) {
                 unregister_code(KC_LOPT);
+            }
+            // if WIDE_TEXT_LAYER, add the extra spacing char
+            else if (layer == WIDE_TEXT_LAYR) {
+                tap_code(KC_SPC);
             }
         }
         else {
@@ -1541,6 +1572,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     case MAC_SYMBOL_LAYR:
         rgb_matrix_set_color(I_INDICATOR, RGB_BLUE);
         break;
+    case WIDE_TEXT_LAYR:
+        rgb_matrix_set_color(I_INDICATOR, RGB_CORAL);
+        break;
     case LOCK_LAYR:
         break;
     default:
@@ -1654,11 +1688,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 layer_lock_timer = timer_read();
             }
             if (is_layer_lock_led_on) {
-                rgb_matrix_set_color(I_LLOCK, 0x77, 0x77, 0x77); // just make it white 
+                rgb_matrix_set_color(I_LLOCK, RGB_WHITE); // just make it white 
             }
             else if ((timer_elapsed(layer_lock_timer) > 200 && timer_elapsed(layer_lock_timer) < 400) || 
                      (timer_elapsed(layer_lock_timer) > 600)) {
-                rgb_matrix_set_color(I_LLOCK, 0x77, 0x77, 0x77); // white alternate with layer color 
+                rgb_matrix_set_color(I_LLOCK, RGB_WHITE); // white alternate with layer color 
             }
         }
     }
@@ -2249,6 +2283,15 @@ void rsft_finished (tap_dance_state_t *state, void *user_data) {
           clear_oneshot_layer_state(ONESHOT_PRESSED);
       }
       break;
+    case DOUBLE_TAP:
+      // activate WIDE_TEXT_LAYR
+      if (IS_LAYER_ON(WIDE_TEXT_LAYR)) {
+          layer_lock_off(WIDE_TEXT_LAYR);
+      }
+      else {
+          layer_lock_on(WIDE_TEXT_LAYR);
+      }
+      break;
     case SINGLE_HOLD:
       // check if this is caps word activation, otherwise regular shift
       if (get_mods() & MOD_BIT(KC_LSFT)) {
@@ -2268,6 +2311,8 @@ void rsft_reset (tap_dance_state_t *state, void *user_data) {
           reset_oneshot_layer();
           caps_word_on();
       }
+      break;
+    case DOUBLE_TAP:
       break;
     case SINGLE_HOLD:
       if (get_mods() & MOD_BIT(KC_LSFT)) {
