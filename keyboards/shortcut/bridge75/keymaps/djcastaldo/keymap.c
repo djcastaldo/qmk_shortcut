@@ -1736,8 +1736,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         {
             switch (layer) {
             case FN_LAYR:
-                rgb_matrix_set_color(I_CAPS, RGB_GREEN); // caps
-                rgb_matrix_set_color(I_FN, RGB_GREEN);  // fn
+                rgb_matrix_set_color(I_CAPS, RGB_GREEN);  // caps
+                rgb_matrix_set_color(I_FN, RGB_GREEN);    // fn
                 break;
             case SFT_LAYR:
                 rgb_matrix_set_color(I_LSFT, RGB_ORANGE); // lshift
@@ -1752,13 +1752,26 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 break;
             case SYMBOL_LAYR:
                 if (timer_elapsed(layer_timer) > 250) {
-                    rgb_matrix_set_color(I_RALT, RGB_YELLOW);   // ralt
-                    rgb_matrix_set_color(I_LGUI, RGB_YELLOW);   // lgui
+                    rgb_matrix_set_color(I_RALT, RGB_YELLOW); // ralt
+                    rgb_matrix_set_color(I_LGUI, RGB_YELLOW); // lgui
                 }
                 else {
                     rgb_matrix_set_color(I_RALT, RGB_BLUE);   // ralt
                     rgb_matrix_set_color(I_LGUI, RGB_BLUE);   // lgui
                 }
+                break;
+            case MAC_SYMBOL_LAYR:
+                if (timer_elapsed(layer_timer) > 250) {
+                    rgb_matrix_set_color(I_LOPT, RGB_YELLOW); // lopt
+                    rgb_matrix_set_color(I_RCMD, RGB_YELLOW); // rcmd
+                }
+                else {
+                    rgb_matrix_set_color(I_LOPT, RGB_BLUE);   // lopt
+                    rgb_matrix_set_color(I_RCMD, RGB_BLUE);   // rcmd
+                }
+                break;
+            case WIDE_TEXT_LAYR:
+                rgb_matrix_set_color(I_RSFT, RGB_YELLOW);     // rshift
                 break;
             }
         }
@@ -2087,8 +2100,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 bool key_should_fade(keytracker key, uint8_t layer) {
     bool should_fade = true;
     if ((key.fade < 1) ||
-      ((layer == FN_LAYR || layer == SFT_LAYR || is_caps_word_on()) && (key.index == I_LSFT || key.index == I_RSFT)) ||  // l/r shift
-      ((layer == FN_LAYR || layer == CTL_LAYR) && (key.index == I_LALT || key.index == I_RALT)) ||                       // l/r alt
+      ((layer == FN_LAYR || layer == SFT_LAYR || layer == WIDE_TEXT_LAYR || is_caps_word_on()) && 
+        (key.index == I_LSFT || key.index == I_RSFT)) ||                                                         // l/r shift
+      ((layer == FN_LAYR || layer == CTL_LAYR) && (key.index == I_LALT || key.index == I_RALT)) ||               // l/r alt
       (macro_recording && (key.index == I_MREC1 || key.index == I_MREC2)) ||                                     // macro recording keys
       (is_layer_locked(layer) && key.index == I_LLOCK) ||                                                        // home (layer lock key)
       (is_in_leader_sequence && key.index == I_L) ||                                                             // leader key
