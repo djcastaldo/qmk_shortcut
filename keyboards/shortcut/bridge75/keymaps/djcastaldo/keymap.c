@@ -810,9 +810,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LTRANS:
         if (record->event.pressed) {
             uint8_t layer = get_highest_layer(layer_state);
+            const uint8_t mods = get_mods();
             // prefix to send for the TMUX_LAYR
             if (layer == TMUX_LAYR) {
-                const uint8_t mods = get_mods();
                 unregister_mods(mods); // temp remove mods
                 tap_code16(C(KC_B));   // send ctrl-b before keycode processing
                 register_mods(mods);   // reapply mods
@@ -823,6 +823,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             // for some wide modes, should start with the spacing char
             if (layer == WIDE_TEXT_LAYR && wide_firstchar) {
+                unregister_mods(mods); // temp remove mods 
                 if (wide_bartext) {
                     tap_code16(KC_PIPE);
                 }
@@ -832,6 +833,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 else if (wide_underln) {
                     tap_code16(KC_UNDS);
                 }
+                register_mods(mods);   // reapply mods
                 wide_firstchar = false;
             }
             // send keydown from the default layer
@@ -842,6 +844,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             // if WIDE_TEXT_LAYER, add the extra spacing char
             else if (layer == WIDE_TEXT_LAYR) {
+                unregister_mods(mods); // temp remove mods 
                 if (wide_bartext) {
                     tap_code16(KC_PIPE);
                 }
@@ -854,6 +857,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 else {
                     tap_code16(KC_SPC);
                 }
+                register_mods(mods);   // reapply mods
             }
         }
         else {
