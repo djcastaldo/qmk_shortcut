@@ -14,6 +14,16 @@ bool process_leader_secrets(void) {
   return true;
 }
 
+// set up something for eeprom persistent storage if the BASE/BASE2 layers should be for linux os
+// this saves duplicating 2 entire keymap layouts (windows/linux will use the same keys)
+typedef union {
+    uint32_t raw;
+    struct {
+        bool is_linux_base :1;
+    };
+} user_config_t;
+user_config_t user_config;
+
 // layer identifiers
 enum layers {
     BASE_LAYR,
@@ -703,6 +713,8 @@ void dual_key(uint16_t std_keycode, uint16_t alt_keycode, uint8_t mod_mask);
 
 // function to send symbols normally requiring alt codes in ms windows
 void symbol_key(const char *alt_code, const char *shift_alt_code);
+// function to send symbols normally requiring hex codes in linux
+void symbol_key_linux(const char *hex_code, const char *shift_hex_code);
 // and to type a string of numbers using the numpad (created for windows alt codes)
 void type_numpad_keys_from_string(const char *stringnum);
 
@@ -721,17 +733,17 @@ static uint16_t color_test_timer;
 // for tracking if the base layer was changed in order to flash some indicators
 bool base_layer_changed;
 static uint16_t base_change_timer;
-bool macwin_changed;
-static uint16_t macwin_change_timer;
+bool os_changed;
+static uint16_t os_change_timer;
 
 // for tracking if an accent char tap dance should light up a particular key to show what the tap will send
 int act_char_led_index = 0;
 
-// for tracking if base is win or mac
+// for tracking if base is mac
 bool is_mac_base(void) {
     return (IS_LAYER_ON(MAC_BASE2_LAYR) || IS_LAYER_ON(MAC_BASE_LAYR)); 
 }
-// use this to highlight keyboard shortcuts with rgb when winkey is held
+// use this to highlight keyboard shortcuts with rgb when winkey (or linux super) is held
 // split some of these into another color since they are used rarely
 bool is_winkey_held;
 int winkey_scut_keys[] = {I_INDICATOR, I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8, I_9, I_TAB, I_Q, I_E, I_R, I_A, I_D, I_L,
@@ -739,6 +751,10 @@ int winkey_scut_keys[] = {I_INDICATOR, I_0, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I
 int winkey_scut_altcolor[] = {I_MIN, I_PLUS, I_T, I_U, I_I, I_P, I_S, I_F, I_G, I_H, I_K, I_SEMI, I_Z, I_V, I_M, I_COMMA, I_DOT};
 int winkey_scut_keys_size = sizeof(winkey_scut_keys) / sizeof(winkey_scut_keys[0]);
 int winkey_scut_altcolor_size = sizeof(winkey_scut_altcolor) / sizeof(winkey_scut_altcolor[0]);
+int super_scut_keys[] = {I_INDICATOR, I_1, I_2, I_3, I_4, I_5, I_6, I_7, I_8, I_9, I_0, I_TAB, I_Q, I_A, I_D, I_L, I_PGUPPGDN, I_PGDNEND, I_V};
+int super_scut_altcolor[] = {I_GRV, I_UP, I_DOWN, I_LEFT, I_RIGHT};
+int super_scut_keys_size = sizeof(super_scut_keys) / sizeof(super_scut_keys[0]);
+int super_scut_altcolor_size = sizeof(super_scut_altcolor) / sizeof(super_scut_altcolor[0]);
 
 // for tracking wide-text options for the WIDE_TEXT_LAYR
 bool wide_sthru = false;
@@ -1211,249 +1227,495 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     // the following OPT keycodes mimic a macos option os layer for symbols and accents
     // symbol_key() is a fn to type a windows alt code on the numpad
+    // symbol_key_linux() uses hex codes to type the same symbols on linux
     case OPT2:
         if (record->event.pressed) {
-            symbol_key("0153","0128");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2122","20ac");
+            }
+            else {
+                symbol_key("0153","0128");
+            }
         }   
         break;
     case OPT3:
         if (record->event.pressed) {
-            symbol_key("156","0139");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00a3","2039");
+            }
+            else {
+                symbol_key("156","0139");
+            }
         }   
         break;
     case OPT4:
         if (record->event.pressed) {
-            symbol_key("155","0155");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00a2","203a");
+            }
+            else {
+                symbol_key("155","0155");
+            }
         }   
         break;
     case OPT5:
         if (record->event.pressed) {
-            symbol_key("236","64257");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("221e","fb01");
+            }
+            else {
+                symbol_key("236","64257");
+            }
         }   
         break;
     case OPT6:
         if (record->event.pressed) {
-            symbol_key("21","64258");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00a7","fb02");
+            }
+            else {
+                symbol_key("21","64258");
+            }
         }   
         break;
     case OPT7:
         if (record->event.pressed) {
-            symbol_key("20","0135");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00b6","2021");
+            }
+            else {
+                symbol_key("20","0135");
+            }
         }   
         break;
     case OPT8:
         if (record->event.pressed) {
-            symbol_key("7","248");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2022","00b0");
+            }
+            else {
+                symbol_key("7","248");
+            }
         }   
         break;
     case OPT9:
         if (record->event.pressed) {
-            symbol_key("166","9");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00aa","00b7");
+            }
+            else {
+                symbol_key("166","9");
+            }
         }   
         break;
     case OPT0:
         if (record->event.pressed) {
-            symbol_key("167","0164");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00ba","201a");
+            }
+            else {
+                symbol_key("167","0164");
+            }
         }   
         break;
     case OPTMIN:
         if (record->event.pressed) {
-            symbol_key("0151","22");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2013","2014");
+            }
+            else {
+                symbol_key("0151","22");
+            }
         }   
         break;
     case OPTEQ:
         if (record->event.pressed) {
-            symbol_key("8800","241");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2260","00b1");
+            }
+            else {
+                symbol_key("8800","241");
+            }
         }   
         break;
     case OPTQ:
         if (record->event.pressed) {
-            symbol_key("0156","0140");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("0153","0152");
+            }
+            else {
+                symbol_key("0156","0140");
+            }
         }   
         break;
     case OPTW:
         if (record->event.pressed) {
-            symbol_key("228","0132");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2211","201e");
+            }
+            else {
+                symbol_key("228","0132");
+            }
         }   
         break;
     case OPTR:
         if (record->event.pressed) {
-            symbol_key("0174","0137");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00ae","2030");
+            }
+            else {
+                symbol_key("0174","0137");
+            }
         }   
         break;
     case OPTT:
         if (record->event.pressed) {
-            symbol_key("0134","259");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2020","02c7");
+            }
+            else {
+                symbol_key("0134","259");
+            }
         }   
         break;
     case OPTY:
         if (record->event.pressed) {
-            symbol_key("157","0193");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00a5","00c1");
+            }
+            else {
+                symbol_key("157","0193");
+            }
         }   
         break;
     case OPTO:
         if (record->event.pressed) {
-            symbol_key("0248","0216");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00f8","00d8");
+            }
+            else {
+                symbol_key("0248","0216");
+            }
         }   
         break;
     case OPTP:
         if (record->event.pressed) {
-            symbol_key("227","928");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("03c0","03a0");
+            }
+            else {
+                symbol_key("227","928");
+            }
         }   
         break;
     case OPTLBR:
         if (record->event.pressed) {
-            symbol_key("0147","0148");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("201c","201d");
+            }
+            else {
+                symbol_key("0147","0148");
+            }
         }   
         break;
     case OPTRBR:
         if (record->event.pressed) {
-            symbol_key("0145","0146");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2018","2019");
+            }
+            else {
+                symbol_key("0145","0146");
+            }
         }   
         break;
     case OPTBSL:
         if (record->event.pressed) {
-            symbol_key("174","175");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00ab","00bb");
+            }
+            else {
+                symbol_key("174","175");
+            }
         }   
         break;
     case OPTA:
         if (record->event.pressed) {
-            symbol_key("0229","0197");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00e5","00c5");
+            }
+            else {
+                symbol_key("0229","0197");
+            }
         }   
         break;
     case OPTS:
         if (record->event.pressed) {
-            symbol_key("225","0205");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00df","00cd");
+            }
+            else {
+                symbol_key("225","0205");
+            }
         }   
         break;
     case OPTD:
         if (record->event.pressed) {
-            symbol_key("8706","0206");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2202","00ce");
+            }
+            else {
+                symbol_key("8706","0206");
+            }
         }   
         break;
     case OPTF:
         if (record->event.pressed) {
-            symbol_key("159","0207");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("0192","00cf");
+            }
+            else {
+                symbol_key("159","0207");
+            }
         }   
         break;
     case OPTG:
         if (record->event.pressed) {
-            symbol_key("0169","0180");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00a9","02dd");
+            }
+            else {
+                symbol_key("0169","0180");
+            }
         }   
         break;
     case OPTH:
         if (record->event.pressed) {
-            symbol_key("0183","0211");
-        }
-        break;
-    case OPTK:
-        if (record->event.pressed) {
-            symbol_key("0186","0208");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("02d9","00d3");
+            }
+            else {
+                symbol_key("0183","0211");
+            }
         }
         break;
     case OPTJ:
         if (record->event.pressed) {
-            symbol_key("30","0212");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2206","00d4");
+            }
+            else {
+                symbol_key("30","0212");
+            }
+        }
+        break;
+    case OPTK:
+        if (record->event.pressed) {
+            if (user_config.is_linux_base) {
+                symbol_key_linux("02da","03f0");
+            }
+            else {
+                symbol_key("0186","0208");
+            }
         }
         break;
     case OPTL:
         if (record->event.pressed) {
-            symbol_key("170","0210");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00ac","00d2");
+            }
+            else {
+                symbol_key("170","0210");
+            }
         }
         break;
     case OPTSEM:
         if (record->event.pressed) {
-            symbol_key("0133","0218");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2026","00da");
+            }
+            else {
+                symbol_key("0133","0218");
+            }
         }
         break;
     case OPTAPO:
         if (record->event.pressed) {
-            symbol_key("0230","0198");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00e6","00c6");
+            }
+            else {
+                symbol_key("0230","0198");
+            }
         }
         break;
     case OPTZ:
         if (record->event.pressed) {
-            symbol_key("234","0184");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("03a9","00b8");
+            }
+            else {
+                symbol_key("234","0184");
+            }
         }
         break;
     case OPTX:
         if (record->event.pressed) {
-            symbol_key("247","0215");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2248","02db");
+            }
+            else {
+                symbol_key("247","0215");
+            }
         }
         break;
     case OPTC:
         if (record->event.pressed) {
-            symbol_key("0231","0199");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00e7","00c7");
+            }
+            else {
+                symbol_key("0231","0199");
+            }
         }
         break;
     case OPTV:
         if (record->event.pressed) {
-            symbol_key("251","4");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("221a","25ca");
+            }
+            else {
+                symbol_key("251","4");
+            }
         }
         break;
     case OPTB:
         if (record->event.pressed) {
-            symbol_key("8747","0305");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("222b","0131");
+            }
+            else {
+                symbol_key("8747","0305");
+            }
         }
         break;
     case OPTM:
         if (record->event.pressed) {
-            symbol_key("230","0194");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("03bc","00c2");
+            }
+            else {
+                symbol_key("230","0194");
+            }
         }
         break;
     case OPTCOM:
         if (record->event.pressed) {
-            symbol_key("243","0175");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2264","00af");
+            }
+            else {
+                symbol_key("243","0175");
+            }
         }
         break;
     case OPTDOT:
         if (record->event.pressed) {
-            symbol_key("242","0168");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2265","02d8");
+            }
+            else {
+                symbol_key("242","0168");
+            }
         }
         break;
     case OPTSLS:
         if (record->event.pressed) {
-            symbol_key("0247","168");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00f7","00bf");
+            }
+            else {
+                symbol_key("0247","168");
+            }
         }
         break;
     case SUITH:
         if (record->event.pressed) {
-            symbol_key("3","3");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2665","2665");
+            }
+            else {
+                symbol_key("3","3");
+            }
         }
         break;
     case SUITD:
         if (record->event.pressed) {
-            symbol_key("4","4");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2666","2666");
+            }
+            else {
+                symbol_key("4","4");
+            }
         }
         break;
     case SUITC:
         if (record->event.pressed) {
-            symbol_key("5","5");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2663","2663");
+            }
+            else {
+                symbol_key("5","5");
+            }
         }
         break;
     case SUITS:
         if (record->event.pressed) {
-            symbol_key("6","6");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("2660","2660");
+            }
+            else {
+                symbol_key("6","6");
+            }
         }
         break;
     case SUP1:
         if (record->event.pressed) {
-            symbol_key("0185","0185");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00b9","00b9");
+            }
+            else {
+                symbol_key("0185","0185");
+            }
         }
         break;
     case SUP2:
         if (record->event.pressed) {
-            symbol_key("0178","0178");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00b2","00b2");
+            }
+            else {
+                symbol_key("0178","0178");
+            }
         }
         break;
     case SUP3:
         if (record->event.pressed) {
-            symbol_key("0179","0179");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00b3","00b3");
+            }
+            else {
+                symbol_key("0179","0179");
+            }
         }
         break;
     case NBSP:
         if (record->event.pressed) {
-            symbol_key("0160","0166");
+            if (user_config.is_linux_base) {
+                symbol_key_linux("00a0","00a6");
+            }
+            else {
+                symbol_key("0160","0166");
+            }
         }
         break;
     case STHRU:
@@ -1578,6 +1840,24 @@ void symbol_key(const char *alt_code, const char *shift_alt_code) {
     if (numlockChanged) {
         tap_code(KC_NUM);
     }
+}
+
+void symbol_key_linux(const char *hex_code, const char *shift_hex_code) {
+    // get current mod and one-shot mod states.
+    const uint8_t mods = get_mods();
+    const uint8_t oneshot_mods = get_oneshot_mods();
+    const char *ucode = ((mods | oneshot_mods) & MOD_MASK_SHIFT) ? shift_hex_code : hex_code;
+    if (ucode == NULL || *ucode == '\0') { // null or empty string
+        return;
+    }
+    clear_oneshot_mods();
+    unregister_mods(mods); // temp remove mods
+    tap_code16(C(S(KC_U))); // start the unicode sequence
+    // type the hex chars
+    send_string_with_delay(ucode,5);
+    // finish sequence
+    tap_code(KC_SPC);
+    register_mods(mods); // add back mods
 }
 
 // send_string doesn't use the numpad, so this fn was created to type numbers using the numpad
@@ -1797,13 +2077,23 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     else {
         rgb_matrix_set_color(I_FN, RGB_BLUE);        // fn
         rgb_matrix_set_color(I_TAB, 0x77,0x77,0x77); // tab
-        // on windows, highlight the possible winkey shortcuts while winkey is held
+        // on windows or linux, highlight some possible winkey/super shortcuts while winkey/super is held
         if (is_winkey_held) {
-            for (int i = 0; i < winkey_scut_keys_size; i++) {
-                rgb_matrix_set_color(winkey_scut_keys[i], 102, 178, 255);  // winkey shortcut keys
+            if (user_config.is_linux_base) {
+                for (int i = 0; i < super_scut_keys_size; i++) {
+                    rgb_matrix_set_color(super_scut_keys[i], 102, 178, 255);   // gnome super shortcut keys
+                }
+                for (int i = 0; i < super_scut_altcolor_size; i++) {
+                    rgb_matrix_set_color(super_scut_altcolor[i], RGB_BLUE);    // gnome super shortcut keys
+                }
             }
-            for (int i = 0; i < winkey_scut_altcolor_size; i++) {
-                rgb_matrix_set_color(winkey_scut_altcolor[i], RGB_BLUE);    // winkey shortcut keys
+            else {
+                for (int i = 0; i < winkey_scut_keys_size; i++) {
+                    rgb_matrix_set_color(winkey_scut_keys[i], 102, 178, 255);  // winkey shortcut keys
+                }
+                for (int i = 0; i < winkey_scut_altcolor_size; i++) {
+                    rgb_matrix_set_color(winkey_scut_altcolor[i], RGB_BLUE);   // winkey shortcut keys
+                }
             }
         }    
         if (!host_keyboard_led_state().caps_lock) {
@@ -1922,27 +2212,30 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             base_layer_changed = false;
         }
     }    
-    // check if mac/win change happened, and flash some indicators to show the change
-    if (macwin_changed) {
+    // check if os change happened, and flash some indicators to show the change
+    if (os_changed) {
         // turn off all currently lit leds first
         for (uint8_t i = led_min; i < led_max; i++) {
             rgb_matrix_set_color(i, 0x00, 0x00, 0x00);
         }
-        int macwin_key1 = is_mac_base() ? I_M : I_W; 
-        int macwin_key2 = is_mac_base() ? I_A : I_I; 
-        int macwin_key3 = is_mac_base() ? I_C : I_N; 
-        if (!macwin_change_timer || timer_elapsed(macwin_change_timer) > 1900) {
-            macwin_change_timer = timer_read();
+        int os_key1 = is_mac_base() ? I_M : I_W;
+        int os_key2 = is_mac_base() ? I_A : I_I;
+        int os_key3 = is_mac_base() ? I_C : I_N;
+        if (!is_mac_base() && user_config.is_linux_base) {
+            os_key1 = I_L;
+        }
+        if (!os_change_timer || timer_elapsed(os_change_timer) > 1900) {
+            os_change_timer = timer_read();
         } 
-        rgb_matrix_set_color(macwin_key1, RGB_WHITE);           // M / W 
-        if (timer_elapsed(macwin_change_timer) > 300) {
-            rgb_matrix_set_color(macwin_key2, RGB_WHITE);       // A / I 
+        rgb_matrix_set_color(os_key1, RGB_WHITE);           // M | W | L
+        if (timer_elapsed(os_change_timer) > 300) {
+            rgb_matrix_set_color(os_key2, RGB_WHITE);       // A | I | I
         }
-        if (timer_elapsed(macwin_change_timer) > 600) {
-            rgb_matrix_set_color(macwin_key3, RGB_WHITE);       // C / N 
+        if (timer_elapsed(os_change_timer) > 600) {
+            rgb_matrix_set_color(os_key3, RGB_WHITE);       // C | N | N
         }
-        if (timer_elapsed(macwin_change_timer) > 1800) {
-            macwin_changed = false;
+        if (timer_elapsed(os_change_timer) > 1800) {
+            os_changed = false;
         }
     }
 
@@ -2114,7 +2407,7 @@ bool key_should_fade(keytracker key, uint8_t layer) {
       (layer == FN_LAYR && key.index == I_SLOCK) ||                                                              // scroll lock
       (layer == WIDE_TEXT_LAYR && (key.index == I_BARTEXT || key.index == I_STHRU || key.index == I_UNDERLN)) || // wide-text mode toggles
       (layer == CTL_LAYR && (key.index == I_FJLIGHT || key.index == I_HROWLIGHT)) ||                             // hrow/fj indicators 
-      (macwin_changed) ||                                                                                        // mac/win base change
+      (os_changed) ||                                                                                            // mac/win/lin base change
       (layer == SYMBOL_LAYR && (key.index == I_GRV || key.index == I_1 || key.index == I_E ||
                                 key.index == I_I || key.index == I_U || key.index == I_N ||                      // accent keys
                                 key.index == I_RALT || key.index == I_LGUI)) ||                                  // sym_layr ralt and lgui 
@@ -2485,19 +2778,44 @@ void actgrv_finished (tap_dance_state_t *state, void *user_data) {
   actgrv_tap_state.state = cur_dance(state);
   switch (actgrv_tap_state.state) {
     case SINGLE_TAP:
-      symbol_key("0224","0192"); // a
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e0","00c0");
+      }
+      else {
+        symbol_key("0224","0192"); // a
+      }
       break;
     case DOUBLE_TAP:
-      symbol_key("0232","0200"); // e
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e8","00c8");
+      }
+      else {
+        symbol_key("0232","0200"); // e
+      }
       break;
     case TRIPLE_TAP:
-      symbol_key("0236","0204"); // i
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00ec","00cc");
+      }
+      else {
+        symbol_key("0236","0204"); // i
+      }
       break;
     case QUAD_TAP:
-      symbol_key("0242","0210"); // o
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f2","00d2");
+      }
+      else {
+        symbol_key("0242","0210"); // o
+      }
       break;
     case PENT_TAP:
-      symbol_key("0249","0217"); // u
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f9","00d9");
+      }
+      else {
+        symbol_key("0249","0217"); // u
+      }
       break;
     case HEXA_TAP:
       break;
@@ -2530,13 +2848,28 @@ void act1_finished (tap_dance_state_t *state, void *user_data) {
   act1_tap_state.state = cur_dance(state);
   switch (act1_tap_state.state) {
     case SINGLE_TAP:
-      symbol_key("173","0188");  // inverted ! or 1/4 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00a1","00bc");
+      }
+      else {
+        symbol_key("173","0188");  // inverted ! or 1/4 
+      }
       break;
     case DOUBLE_TAP:
-      symbol_key("0189","0189"); // 1/2 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00bd","00bd");
+      }
+      else {
+        symbol_key("0189","0189"); // 1/2 
+      }
       break;
     case TRIPLE_TAP:
-      symbol_key("0190","0190"); // 3/4
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00be","00be");
+      }
+      else {
+        symbol_key("0190","0190"); // 3/4
+      }
       break;
     case QUAD_TAP:
       break;
@@ -2582,22 +2915,52 @@ void acte_finished (tap_dance_state_t *state, void *user_data) {
   acte_tap_state.state = cur_dance(state);
   switch (acte_tap_state.state) {
     case SINGLE_TAP:
-      symbol_key("0233","0201"); // e 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e9","00c9");
+      }
+      else {
+        symbol_key("0233","0201"); // e 
+      }
       break;
     case DOUBLE_TAP:
-      symbol_key("0225","0193"); // a 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e1","00c1");
+      }
+      else {
+        symbol_key("0225","0193"); // a 
+      }
       break;
     case TRIPLE_TAP:
-      symbol_key("0237","0205"); // i 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00ed","00cd");
+      }
+      else {
+        symbol_key("0237","0205"); // i 
+      }
       break;
     case QUAD_TAP:
-      symbol_key("0243","0211"); // o 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f3","00d3");
+      }
+      else {
+        symbol_key("0243","0211"); // o 
+      }
       break;
     case PENT_TAP:
-      symbol_key("0250","0218"); // u 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00fa","00da");
+      }
+      else {
+        symbol_key("0250","0218"); // u 
+      }
       break;
     case HEXA_TAP:
-      symbol_key("0253","0221"); // y 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00fd","00dd");
+      }
+      else {
+        symbol_key("0253","0221"); // y 
+      }
       break;
   }
 }
@@ -2637,22 +3000,52 @@ void actu_finished (tap_dance_state_t *state, void *user_data) {
   actu_tap_state.state = cur_dance(state);
   switch (actu_tap_state.state) {
     case SINGLE_TAP:
-      symbol_key("0228","0196"); // a 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e4","00c4");
+      }
+      else {
+        symbol_key("0228","0196"); // a 
+      }
       break;
     case DOUBLE_TAP:
-      symbol_key("0235","0203"); // e 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00eb","00cb");
+      }
+      else {
+        symbol_key("0235","0203"); // e 
+      }
       break;
     case TRIPLE_TAP:
-      symbol_key("0239","0207"); // i 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00ef","00cf");
+      }
+      else {
+        symbol_key("0239","0207"); // i 
+      }
       break;
     case QUAD_TAP:
-      symbol_key("0246","0214"); // o 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f6","00d6");
+      }
+      else {
+        symbol_key("0246","0214"); // o 
+      }
       break;
     case PENT_TAP:
-      symbol_key("0252","0220"); // u 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00fc","00dc");
+      }
+      else {
+        symbol_key("0252","0220"); // u 
+      }
       break;
     case HEXA_TAP:
-      symbol_key("0255","0159"); // y 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00ff","0178");
+      }
+      else {
+        symbol_key("0255","0159"); // y 
+      }
       break;
   }
 }
@@ -2689,19 +3082,44 @@ void acti_finished (tap_dance_state_t *state, void *user_data) {
   acti_tap_state.state = cur_dance(state);
   switch (acti_tap_state.state) {
     case SINGLE_TAP:
-      symbol_key("0238","0206"); // i 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00ee","00ce");
+      }
+      else {
+        symbol_key("0238","0206"); // i 
+      }
       break;
     case DOUBLE_TAP:
-      symbol_key("0226","0194"); // a 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e2","00c2");
+      }
+      else {
+        symbol_key("0226","0194"); // a 
+      }
       break;
     case TRIPLE_TAP:
-      symbol_key("0234","0202"); // e 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00ea","00ca");
+      }
+      else {
+        symbol_key("0234","0202"); // e 
+      }
       break;
     case QUAD_TAP:
-      symbol_key("0244","0212"); // o 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f4","00d4");
+      }
+      else {
+        symbol_key("0244","0212"); // o 
+      }
       break;
     case PENT_TAP:
-      symbol_key("0251","0219"); // u 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00fb","00db");
+      }
+      else {
+        symbol_key("0251","0219"); // u 
+      }
       break;
     case HEXA_TAP:
       break;
@@ -2734,13 +3152,28 @@ void actn_finished (tap_dance_state_t *state, void *user_data) {
   actn_tap_state.state = cur_dance(state);
   switch (actn_tap_state.state) {
     case SINGLE_TAP:
-      symbol_key("164","165");   // n 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f1","00d1");
+      }
+      else {
+        symbol_key("164","165");   // n 
+      }
       break;
     case DOUBLE_TAP:
-      symbol_key("0227","0195"); // a 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00e3","00c3");
+      }
+      else {
+        symbol_key("0227","0195"); // a 
+      }
       break;
     case TRIPLE_TAP:
-      symbol_key("0245","0213"); // o 
+      if (user_config.is_linux_base) {
+        symbol_key_linux("00f5","00d5");
+      }
+      else {
+        symbol_key("0245","0213"); // o 
+      }
       break;
   }
 }
@@ -2986,15 +3419,84 @@ void leader_end_user(void) {
         set_key_lock_watching();
     }
     else if (leader_sequence_two_keys(KC_O, KC_S)) {                 // change os
-        if (is_mac_base()) {
-            set_single_persistent_default_layer(BASE2_LAYR);
-            layer_move(BASE2_LAYR);
+        // cycle mac->linux->windows->mac
+        /*if (is_mac_base()) {
+            if (IS_LAYER_ON(MAC_BASE2_LAYR)) {
+                set_single_persistent_default_layer(BASE2_LAYR);
+                layer_move(BASE2_LAYR);
+            }
+            else {
+                set_single_persistent_default_layer(BASE_LAYR);
+                layer_move(BASE_LAYR);
+            }
+            if (!user_config.is_linux_base) {
+                user_config.is_linux_base = true;
+                eeconfig_update_user(user_config.raw);
+            }
+        }
+        else if (user_config.is_linux_base) {
+            user_config.is_linux_base = false;
+            eeconfig_update_user(user_config.raw);
         }
         else {
-            set_single_persistent_default_layer(MAC_BASE2_LAYR);
-            layer_move(MAC_BASE2_LAYR);
+            if (IS_LAYER_ON(BASE2_LAYR)) {
+                set_single_persistent_default_layer(MAC_BASE2_LAYR);
+                layer_move(MAC_BASE2_LAYR);
+            }
+            else {
+                set_single_persistent_default_layer(MAC_BASE_LAYR);
+                layer_move(MAC_BASE_LAYR);
+            }
+        }*/
+        // just show which os is currently set
+        os_changed = true;
+    }
+    else if (leader_sequence_three_keys(KC_M, KC_A, KC_C)) {         // change to mac os
+        if (!is_mac_base()) {
+            if (IS_LAYER_ON(BASE2_LAYR)) {
+                set_single_persistent_default_layer(MAC_BASE2_LAYR);
+                layer_move(MAC_BASE2_LAYR);
+            }
+            else {
+                set_single_persistent_default_layer(MAC_BASE_LAYR);
+                layer_move(MAC_BASE_LAYR);
+            }
         }
-        macwin_changed = true;
+        os_changed = true;
+    }
+    else if (leader_sequence_three_keys(KC_W, KC_I, KC_N)) {         // change to windows os
+        if (is_mac_base()) {
+            if (IS_LAYER_ON(MAC_BASE2_LAYR)) {
+                set_single_persistent_default_layer(BASE2_LAYR);
+                layer_move(BASE2_LAYR);
+            }
+            else {
+                set_single_persistent_default_layer(BASE_LAYR);
+                layer_move(BASE_LAYR);
+            }
+        }
+        if (user_config.is_linux_base) {
+            user_config.is_linux_base = false;
+            eeconfig_update_user(user_config.raw);
+        }
+        os_changed = true;
+    }
+    else if (leader_sequence_three_keys(KC_L, KC_I, KC_N)) {         // change to linux os
+        if (is_mac_base()) {
+            if (IS_LAYER_ON(MAC_BASE2_LAYR)) {
+                set_single_persistent_default_layer(BASE2_LAYR);
+                layer_move(BASE2_LAYR);
+            }
+            else {
+                set_single_persistent_default_layer(BASE_LAYR);
+                layer_move(BASE_LAYR);
+            }
+        }
+        if (!user_config.is_linux_base) {
+            user_config.is_linux_base = true;
+            eeconfig_update_user(user_config.raw);
+        }
+        os_changed = true;
     }
     else if (leader_sequence_four_keys(KC_B, KC_A, KC_S, KC_E)) {   // change default BASE layer
         int b_layer = is_mac_base() ? MAC_BASE_LAYR : BASE_LAYR;
@@ -3143,4 +3645,15 @@ void leader_end_user(void) {
     }
 
     is_in_leader_sequence = false;
+}
+
+void keyboard_post_init_user(void) {
+  // read the user config from EEPROM
+  user_config.raw = eeconfig_read_user();
+}
+
+void eeconfig_init_user(void) {  // EEPROM is getting reset!
+  user_config.raw = 0;
+  user_config.is_linux_base = false; // set default here
+  eeconfig_update_user(user_config.raw); // write default value to EEPROM now
 }
