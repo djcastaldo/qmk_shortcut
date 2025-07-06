@@ -62,7 +62,6 @@ enum custom_keycodes {
     KTRACK,
     BASE_CHG,
     MK_HOLD,
-    MK_REL,
     MK_ACCEL0,
     MK_ACCEL2,
     TMUXLKEY,
@@ -293,7 +292,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :   ______________________________________________________________________________________________________________________________   :
 //  :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||              ||LLock |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-//  :  |          ||      ||      ||      ||      ||      ||      ||  P7  ||  P8  ||  P9  || +  - ||      ||      ||          ||MSRel |  :
+//  :  |          ||      ||      ||      ||      ||      ||      ||  P7  ||  P8  ||  P9  || +  - ||      ||      ||          ||      |  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 //  :  |             ||      ||      ||      ||      ||      ||      ||  P4  ||  P5  ||  P6  || *  / ||      ||               ||MSHold|  :
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
@@ -305,7 +304,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [SFT_LAYR] = LAYOUT_ansi(
         _______,KC_MYCM, _______, KC_CALC, KC_APP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_MUTE, KC_VOLD, KC_VOLU,         KC_NUM,
         _______,_______,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, LLOCK,
-        _______,_______,_______,_______, _______, _______, _______, KC_P7, KC_P8, KC_P9, DUAL_PLUSMIN, _______, _______, _______,  MK_REL,
+        _______,_______,_______,_______, _______, _______, _______, KC_P7, KC_P8, KC_P9, DUAL_PLUSMIN, _______, _______, _______, _______,
         _______,_______,_______,_______,_______, _______, _______, KC_P4, KC_P5, KC_P6, DUAL_MULTDIV, _______,          _______,  MK_HOLD,
         _______,MK_ACCEL2, _______,_______,_______,_______, _______, KC_P1, KC_P2, KC_P3, _______,          _______, KC_MS_UP, KC_MS_BTN2,
         _______,_______, MK_ACCEL0,                      KC_P0,                  KC_PDOT, KC_MS_BTN1, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
@@ -756,6 +755,10 @@ int super_scut_altcolor[] = {I_GRV, I_UP, I_DOWN, I_LEFT, I_RIGHT};
 int super_scut_keys_size = sizeof(super_scut_keys) / sizeof(super_scut_keys[0]);
 int super_scut_altcolor_size = sizeof(super_scut_altcolor) / sizeof(super_scut_altcolor[0]);
 
+// this was originally a static declaration in the switch case for MK_HOLD, but I also want to use it outside of
+// that switch case to do rgb change, so am moving it here.
+bool ms_btn_held = false;
+
 // for tracking wide-text options for the WIDE_TEXT_LAYR
 bool wide_sthru = false;
 bool wide_underln = false;
@@ -1183,13 +1186,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     case MK_HOLD:
     	if (record->event.pressed) {
-    	   register_code(KC_MS_BTN1);
+            if (!ms_btn_held) {
+                register_code(KC_MS_BTN1);
+                ms_btn_held = true;
+            }
+            else {
+                unregister_code(KC_MS_BTN1);
+                ms_btn_held = false;
+            }
         }
         break;
-    case MK_REL:
-    	if (record->event.pressed) {
-    	   unregister_code(KC_MS_BTN1);
-        }
+    case KC_MS_BTN1:
+        ms_btn_held = record->event.pressed;
         break;
     case MK_ACCEL0:
         tap_code(record->event.pressed ? KC_MS_ACCEL0 : KC_MS_ACCEL1);
@@ -2357,6 +2365,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (act_char_led_index > 0) {
         rgb_matrix_set_color(act_char_led_index, RGB_WHITE);  // accent char led 
     } 
+    // track if mouse button is held on SFT_LAYR
+    if (layer == SFT_LAYR && ms_btn_held) {
+        rgb_matrix_set_color(I_PGUPPGDN, 0x77, 0x77, 0x77); // mouse btn1 hold key
+    }
     // track mode keys on WIDE_TEXT_LAYR
     if (layer == WIDE_TEXT_LAYR) {
         if (wide_bartext) {
@@ -2403,7 +2415,7 @@ bool key_should_fade(keytracker key, uint8_t layer) {
       (macro_recording && (key.index == I_MREC1 || key.index == I_MREC2)) ||                                     // macro recording keys
       (is_layer_locked(layer) && key.index == I_LLOCK) ||                                                        // home (layer lock key)
       (is_in_leader_sequence && key.index == I_L) ||                                                             // leader key
-      (layer == SFT_LAYR && key.index == I_NUMLOCK) ||                                                           // num lock key
+      (layer == SFT_LAYR && (key.index == I_NUMLOCK || key.index == I_PGUPPGDN)) ||                              // num lock, mouse hold
       (layer == FN_LAYR && key.index == I_SLOCK) ||                                                              // scroll lock
       (layer == WIDE_TEXT_LAYR && (key.index == I_BARTEXT || key.index == I_STHRU || key.index == I_UNDERLN)) || // wide-text mode toggles
       (layer == CTL_LAYR && (key.index == I_FJLIGHT || key.index == I_HROWLIGHT)) ||                             // hrow/fj indicators 
