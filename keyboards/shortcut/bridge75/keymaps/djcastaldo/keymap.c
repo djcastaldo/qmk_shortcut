@@ -3648,12 +3648,13 @@ void leader_end_user(void) {
 }
 
 void keyboard_post_init_user(void) {
-  // read the user config from EEPROM
-  user_config.raw = eeconfig_read_user();
+    // read the user config from EEPROM
+    user_config.raw = eeconfig_read_user();
 }
 
 void eeconfig_init_user(void) {  // EEPROM is getting reset!
-  user_config.raw = 0;
-  user_config.is_linux_base = false; // set default here
-  eeconfig_update_user(user_config.raw); // write default value to EEPROM now
+    user_config.raw = 0;
+    user_config.is_linux_base = false; // set default here
+    eeconfig_update_user(user_config.raw); // write default value to EEPROM now
+    set_single_persistent_default_layer(BASE2_LAYR);
 }
