@@ -220,7 +220,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 //  :  | LShift          || Z    || X    || C    || V    || B    || N    || M    || ,    || .    || /    ||TD(RSFT)   || Up   || End  |  :
 //  :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-//  :  | Ctrl    || Option || Command || Space                                        ||TD(RCMD) ||TD(FN)   |  | Left || Down || Rght |  :
+//  :  | Ctrl    ||TD(LOPT)|| Command || Space                                        ||TD(RCMD) ||TD(FN)   |  | Left || Down || Rght |  :
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_BASE_LAYR] = LAYOUT_ansi(
@@ -246,7 +246,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 //  :  | LShift          || Z    || X    || C    || V    || B    || N    || M    || ,    || .    || /    ||TD(RSFT)   || Up   || PgDn |  :
 //  :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-//  :  | Ctrl    || Option || Command || Space                                        ||TD(RCMD) ||TD(FN)   |  | Left || Down || Rght |  :
+//  :  | Ctrl    ||TR(LOPT)|| Command || Space                                        ||TD(RCMD) ||TD(FN)   |  | Left || Down || Rght |  :
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_BASE2_LAYR] = LAYOUT_ansi(
@@ -836,10 +836,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(C(KC_B));   // send ctrl-b before keycode processing
                 register_mods(mods);   // reapply mods
             }
-            // hold option for MAC_SYMBOL_LAYR
-            else if (layer == MAC_SYMBOL_LAYR) {
-                register_code(KC_LOPT);
-            }
+
             // for some wide modes, should start with the spacing char
             if (layer == WIDE_TEXT_LAYR && wide_firstchar) {
                 unregister_mods(mods); // temp remove mods 
@@ -855,14 +852,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_mods(mods);   // reapply mods
                 wide_firstchar = false;
             }
+
             // send keydown from the default layer
             register_code(keymap_key_to_keycode(biton32(default_layer_state), record->event.key));
-            // release option for MAC_SYMBOL_LAYR
-            if (layer == MAC_SYMBOL_LAYR) {
-                unregister_code(KC_LOPT);
-            }
+
             // if WIDE_TEXT_LAYER, add the extra spacing char
-            else if (layer == WIDE_TEXT_LAYR) {
+            if (layer == WIDE_TEXT_LAYR) {
                 unregister_mods(mods); // temp remove mods 
                 if (wide_bartext) {
                     tap_code16(KC_PIPE);
@@ -1208,6 +1203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case WM_SYM:
         if (record->event.pressed) {
             if (is_mac_base()) {
+                register_code(KC_LOPT);
                 layer_on(MAC_SYMBOL_LAYR);
             }
             else {
@@ -1217,6 +1213,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         else {
             if (is_mac_base()) {
                 if (!is_layer_locked(MAC_SYMBOL_LAYR)) {
+                    unregister_code(KC_LOPT);
                     layer_off(MAC_SYMBOL_LAYR);
                 }
             }
@@ -2631,10 +2628,14 @@ void rcmd_finished (tap_dance_state_t *state, void *user_data) {
       break;
     case DOUBLE_TAP:
       set_oneshot_layer(MAC_SYMBOL_LAYR, ONESHOT_START);
+      add_oneshot_mods(MOD_BIT(KC_ROPT));
       clear_oneshot_layer_state(ONESHOT_PRESSED);
       break;
     case DOUBLE_HOLD:
-      layer_on(MAC_SYMBOL_LAYR);  
+      register_code(KC_ROPT);
+      if (get_highest_layer(layer_state) < 4) {
+          layer_on(MAC_SYMBOL_LAYR);
+      }
       break;
   }
 }
@@ -2649,6 +2650,7 @@ void rcmd_reset (tap_dance_state_t *state, void *user_data) {
       break;
     case DOUBLE_HOLD:
       if (!is_layer_locked(MAC_SYMBOL_LAYR)) {
+        unregister_code(KC_ROPT);
         layer_off(MAC_SYMBOL_LAYR);
       }
       break;
@@ -3245,14 +3247,16 @@ void lopt_finished (tap_dance_state_t *state, void *user_data) {
       tap_code(KC_LOPT);
       break;
     case SINGLE_HOLD:
+    case DOUBLE_HOLD:
       register_code(KC_LOPT);
+      if (get_highest_layer(layer_state) < FN_LAYR) {
+        layer_on(MAC_SYMBOL_LAYR);
+      }
       break;
     case DOUBLE_TAP:
       set_oneshot_layer(MAC_SYMBOL_LAYR, ONESHOT_START);
+      add_oneshot_mods(MOD_BIT(KC_LOPT));
       clear_oneshot_layer_state(ONESHOT_PRESSED);
-      break;
-    case DOUBLE_HOLD:
-      layer_on(MAC_SYMBOL_LAYR);  
       break;
   }
 }
@@ -3261,14 +3265,13 @@ void lopt_reset (tap_dance_state_t *state, void *user_data) {
     case SINGLE_TAP:
       break;
     case SINGLE_HOLD:
-      unregister_code(KC_LOPT);
-      break;
-    case DOUBLE_TAP:
-      break;
     case DOUBLE_HOLD:
       if (!is_layer_locked(MAC_SYMBOL_LAYR)) {
+        unregister_code(KC_LOPT);
         layer_off(MAC_SYMBOL_LAYR);
       }
+      break;
+    case DOUBLE_TAP:
       break;
   }
   lopt_tap_state.state = 0;
@@ -3369,6 +3372,18 @@ void oneshot_layer_changed_user(uint8_t layer) {
     }
 }
 
+void layer_lock_set_user(layer_state_t locked_layers) {
+    static bool opt_is_held_for_symbol = false;
+    if (is_layer_locked(MAC_SYMBOL_LAYR)) {
+        register_code(KC_LOPT);
+        opt_is_held_for_symbol = true;
+    }
+    else if (opt_is_held_for_symbol) {
+        unregister_code(KC_LOPT);
+        opt_is_held_for_symbol = false;
+    }
+}
+
 void leader_start_user(void) {
     is_in_leader_sequence = true;
 }
@@ -3465,7 +3480,7 @@ void leader_end_user(void) {
     }
     else if (leader_sequence_three_keys(KC_M, KC_A, KC_C)) {         // change to mac os
         if (!is_mac_base()) {
-            if (IS_LAYER_ON(BASE2_LAYR)) {
+            if (IS_LAYER_ON(BASE2_LAYR) || layer_state_cmp(default_layer_state, BASE2_LAYR)) {
                 set_single_persistent_default_layer(MAC_BASE2_LAYR);
                 layer_move(MAC_BASE2_LAYR);
             }
@@ -3478,7 +3493,7 @@ void leader_end_user(void) {
     }
     else if (leader_sequence_three_keys(KC_W, KC_I, KC_N)) {         // change to windows os
         if (is_mac_base()) {
-            if (IS_LAYER_ON(MAC_BASE2_LAYR)) {
+            if (IS_LAYER_ON(MAC_BASE2_LAYR) || layer_state_cmp(default_layer_state, MAC_BASE2_LAYR)) {
                 set_single_persistent_default_layer(BASE2_LAYR);
                 layer_move(BASE2_LAYR);
             }
@@ -3495,7 +3510,7 @@ void leader_end_user(void) {
     }
     else if (leader_sequence_three_keys(KC_L, KC_I, KC_N)) {         // change to linux os
         if (is_mac_base()) {
-            if (IS_LAYER_ON(MAC_BASE2_LAYR)) {
+            if (IS_LAYER_ON(MAC_BASE2_LAYR) || layer_state_cmp(default_layer_state, MAC_BASE2_LAYR)) {
                 set_single_persistent_default_layer(BASE2_LAYR);
                 layer_move(BASE2_LAYR);
             }
