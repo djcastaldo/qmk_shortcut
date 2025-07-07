@@ -3677,6 +3677,8 @@ void leader_end_user(void) {
 void keyboard_post_init_user(void) {
     // read the user config from EEPROM
     user_config.raw = eeconfig_read_user();
+    // and set this so layers switch correctly on user's first os change
+    layer_state_set(default_layer_state);
 }
 
 void eeconfig_init_user(void) {  // EEPROM is getting reset!
