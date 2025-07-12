@@ -3586,7 +3586,12 @@ void leader_end_user(void) {
         SEND_STRING("sudo vi /sys/bus/thunderbolt/devices/0-3/authorized" SS_TAP(X_ENT));
     }
     else if (leader_sequence_two_keys(KC_S, KC_W)) {          // select word
-        SEND_STRING(SS_LCTL(SS_TAP(X_LEFT) SS_LSFT(SS_TAP(X_RIGHT))));
+        if (is_mac_base()) {
+            SEND_STRING(SS_LOPT(SS_TAP(X_LEFT) SS_LSFT(SS_TAP(X_RIGHT))));
+        }
+        else {
+            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT) SS_LSFT(SS_TAP(X_RIGHT))));
+        }
     }
     else if (leader_sequence_two_keys(KC_S, KC_L)) {          // select line
         SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)));
