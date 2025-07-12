@@ -1940,7 +1940,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         rgb_matrix_set_color(I_INDICATOR, RGB_BLUE);
         break;
     case WIDE_TEXT_LAYR:
-        rgb_matrix_set_color(I_INDICATOR, RGB_YELLOW);
+        rgb_matrix_set_color(I_INDICATOR, RGB_PURPLE);
         break;
     case LOCK_LAYR:
         break;
@@ -1977,7 +1977,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                         rgb_matrix_set_color(index, RGB_BLUE);
                         break;
                     case WIDE_TEXT_LAYR:
-                        rgb_matrix_set_color(index, RGB_YELLOW);
+                        rgb_matrix_set_color(index, RGB_PURPLE);
                         break;
                     case LOCK_LAYR:
                         break;
@@ -2060,7 +2060,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 }
                 break;
             case WIDE_TEXT_LAYR:
-                rgb_matrix_set_color(I_RSFT, RGB_YELLOW);     // rshift
+                rgb_matrix_set_color(I_RSFT, RGB_PURPLE);     // rshift
                 break;
             }
         }
