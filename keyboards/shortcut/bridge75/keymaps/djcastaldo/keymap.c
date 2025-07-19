@@ -1723,6 +1723,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         break;
+    case KC_MYCM:
+        if (is_mac_base() && record->event.pressed) {
+            // open new Finder home dir
+            tap_code16(LCMD(LSFT(KC_H)));
+            return false;
+        }
+        break;
+    case KC_CALC:
+        if (is_mac_base() && record->event.pressed) {
+            // send command + control + * then delay and then h (setup to open calculator pro)
+            send_string(SS_LCTL(SS_LCMD(SS_TAP(X_PAST))) SS_DELAY(35) "h");
+            return false;
+        }
+        break;
+    case KC_APP:
+        if (is_mac_base() && record->event.pressed) {
+            tap_code(KC_LPAD);
+            return false;
+        }
+        break;
     case STHRU:
         if (record->event.pressed) {
             if (wide_sthru) {
@@ -2071,11 +2091,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 layer_lock_timer = timer_read();
             }
             if (is_layer_lock_led_on) {
-                rgb_matrix_set_color(I_LLOCK, 0x77, 0x77, 0x77); // just make it white 
+                rgb_matrix_set_color(I_LLOCK, RGB_WHITE); // just make it white
             }
             else if ((timer_elapsed(layer_lock_timer) > 200 && timer_elapsed(layer_lock_timer) < 400) || 
                      (timer_elapsed(layer_lock_timer) > 600)) {
-                rgb_matrix_set_color(I_LLOCK, 0x77, 0x77, 0x77); // white alternate with layer color 
+                rgb_matrix_set_color(I_LLOCK, RGB_WHITE); // white alternate with layer color
             }
         }
     }
@@ -2162,39 +2182,39 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             key_lock_timer = timer_read();
         }
         if (is_key_lock_led_on) {
-            rgb_matrix_set_color(I_INDICATOR, 0x77, 0x77, 0x77);   // indicator
+            rgb_matrix_set_color(I_INDICATOR, RGB_WHITE); // indicator
         }
         else {
             rgb_matrix_set_color(I_INDICATOR, RGB_RED);   // indicator
         }
         // and light up normal modifiers if they are currently locked
         if (lctl_locked) {
-            rgb_matrix_set_color(I_LCTL, 0x77, 0x77, 0x77);   // lctl
+            rgb_matrix_set_color(I_LCTL, RGB_WHITE);      // lctl
         }
         if (lalt_locked) {
             if (is_mac_base()) {
-                rgb_matrix_set_color(I_LOPT, 0x77, 0x77, 0x77);   // lopt
+                rgb_matrix_set_color(I_LOPT, RGB_WHITE);  // lopt
             }
             else {
-                rgb_matrix_set_color(I_LALT, 0x77, 0x77, 0x77);   // lalt
+                rgb_matrix_set_color(I_LALT, RGB_WHITE);  // lalt
             }
         }
         if (lsft_locked) {
-            rgb_matrix_set_color(I_LSFT, 0x77, 0x77, 0x77);   // lsft
+            rgb_matrix_set_color(I_LSFT, RGB_WHITE);      // lsft
         }
         if (lgui_locked) {
             if (is_mac_base()) {
-                rgb_matrix_set_color(I_LCMD, 0x77, 0x77, 0x77);   // lcmd
+                rgb_matrix_set_color(I_LCMD, RGB_WHITE);  // lcmd
             }
             else {
-                rgb_matrix_set_color(I_LGUI, 0x77, 0x77, 0x77);   // lgui
+                rgb_matrix_set_color(I_LGUI, RGB_WHITE);  // lgui
             }
         }
         if (rsft_locked) {
-            rgb_matrix_set_color(I_RSFT, 0x77, 0x77, 0x77);   // rsft
+            rgb_matrix_set_color(I_RSFT, RGB_WHITE);      // rsft
         }
         if (ralt_locked) {
-            rgb_matrix_set_color(I_RALT, 0x77, 0x77, 0x77);    // ralt
+            rgb_matrix_set_color(I_RALT, RGB_WHITE);      // ralt
         }
     }
 
@@ -2364,31 +2384,31 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     } 
     // track if mouse button is held on SFT_LAYR
     if (layer == SFT_LAYR && ms_btn_held) {
-        rgb_matrix_set_color(I_PGUPPGDN, 0x77, 0x77, 0x77); // mouse btn1 hold key
+        rgb_matrix_set_color(I_PGUPPGDN, RGB_WHITE); // mouse btn1 hold key
     }
     // track mode keys on WIDE_TEXT_LAYR
     if (layer == WIDE_TEXT_LAYR) {
         if (wide_bartext) {
-            rgb_matrix_set_color(I_BARTEXT, 0x77, 0x77, 0x77);  // bartext toggle
+            rgb_matrix_set_color(I_BARTEXT, RGB_WHITE);  // bartext toggle
         }
         else if (wide_sthru) {
-            rgb_matrix_set_color(I_STHRU, 0x77, 0x77, 0x77);    // sthru toggle
+            rgb_matrix_set_color(I_STHRU, RGB_WHITE);    // sthru toggle
         }
         else if (wide_underln) {
-            rgb_matrix_set_color(I_UNDERLN, 0x77, 0x77, 0x77);  // underln toggle
+            rgb_matrix_set_color(I_UNDERLN, RGB_WHITE);  // underln toggle
         }
     }
     // track caps_lock
     if (host_keyboard_led_state().caps_lock) {
-        rgb_matrix_set_color(I_CAPS, 0x77, 0x77, 0x77);  // caps
+        rgb_matrix_set_color(I_CAPS, RGB_WHITE);  // caps
     }
     // track num_lock
     if (layer == SFT_LAYR && host_keyboard_led_state().num_lock) {
-        rgb_matrix_set_color(I_NUMLOCK, 0x77, 0x77, 0x77);
+        rgb_matrix_set_color(I_NUMLOCK, RGB_WHITE);
     }
     // track scroll_lock
     if (layer == FN_LAYR && host_keyboard_led_state().scroll_lock) {
-        rgb_matrix_set_color(I_SLOCK, 0x77, 0x77, 0x77);
+        rgb_matrix_set_color(I_SLOCK, RGB_WHITE);
     }
         
 
