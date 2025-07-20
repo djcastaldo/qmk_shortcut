@@ -50,6 +50,7 @@ enum custom_keycodes {
     DUAL_PLUSMIN,
     DUAL_MULTDIV,
     DUAL_F12,
+    DUAL_F13,
     DUAL_ESC,
     VI_REPLACE,
     GIT_ADD,
@@ -157,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [BASE_LAYR]
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  ||D_F12 |    | Del  |  :
+//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || DF12 |    | Del  |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
 //  :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    || Home |  :
@@ -172,23 +173,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [BASE_LAYR] = LAYOUT_ansi(
-        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9, KC_F10, KC_F11, DUAL_F12,    KC_DEL,
+        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9, KC_F10, KC_F11, DUAL_F12,     KC_DEL,
         KC_GRV,  KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0, KC_MINS, KC_EQL,   BSPCFAST,     KC_HOME,
         LT(TMUX_LAYR,KC_TAB),  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y,   KC_U,   KC_I,   KC_O,   KC_P, KC_LBRC, KC_RBRC, KC_BSLS,   KC_PGUP,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,    KC_K,  KC_L,  KC_SCLN, KC_QUOT,    KC_ENT,     KC_PGDN,
-        KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_END,
+        KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP,  KC_END,
         KC_LCTL, TD(LGUI_OSL), KC_LALT,                   KC_SPC,                   TD(RALT_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
     ),
 
 //  [BASE2_LAYR]
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  ||D_F12 |    | Del  |  :
+//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || F12  |    | DF13 |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
 //  :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    || Home |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-//  :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        || End  |  :
+//  :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        ||Delete|  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 //  :  | TD(CAPS)    || A    || S    || D    || F    || G    || H    || J    || K    || L    || ;    || '    || Enter         || PgUp |  :
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
@@ -198,9 +199,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [BASE2_LAYR] = LAYOUT_ansi(
-        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9,  KC_F10, KC_F11, DUAL_F12,   KC_DEL,
+        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,   DUAL_F13,
         KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,     KC_HOME,
-        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,    KC_I,  KC_O,   KC_P, KC_LBRC, KC_RBRC,  KC_BSLS,  KC_END,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,    KC_I,  KC_O,   KC_P, KC_LBRC, KC_RBRC,  KC_BSLS,   KC_DEL,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGUP,
         KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_PGDN,
         KC_LCTL, TD(LGUI_OSL), KC_LALT,                   KC_SPC,                   TD(RALT_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
@@ -209,7 +210,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [MAC_BASE_LAYR]
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  ||D_F12 |    | Del  |  :
+//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || DF12 |    | Del  |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
 //  :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    || Home |  :
@@ -224,23 +225,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_BASE_LAYR] = LAYOUT_ansi(
-        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9, KC_F10, KC_F11, DUAL_F12,    KC_DEL,
+        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9, KC_F10, KC_F11, DUAL_F12,     KC_DEL,
         KC_GRV,  KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0, KC_MINS, KC_EQL,   BSPCFAST,     KC_HOME,
         LT(TMUX_LAYR,KC_TAB),  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y,   KC_U,   KC_I,   KC_O,   KC_P, KC_LBRC, KC_RBRC, KC_BSLS,   KC_PGUP,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,    KC_K,  KC_L,  KC_SCLN, KC_QUOT,    KC_ENT,     KC_PGDN,
-        KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_END,
+        KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP,  KC_END,
         KC_LCTL, TD(LOPT_OSL), KC_LCMD,                   KC_SPC,                   TD(RCMD_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
     ),
 
 //  [MAC_BASE2_LAYR]
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  ||D_F12 |    | Del  |  :
+//  :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || F12  |    | DF13 |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
 //  :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    || Home |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-//  :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        || End  |  :
+//  :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        ||Delete|  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 //  :  | TD(CAPS)    || A    || S    || D    || F    || G    || H    || J    || K    || L    || ;    || '    || Enter         || PgUp |  :
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
@@ -250,9 +251,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_BASE2_LAYR] = LAYOUT_ansi(
-        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9,  KC_F10, KC_F11, DUAL_F12,   KC_DEL,
+        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,   DUAL_F13,
         KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,     KC_HOME,
-        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,    KC_I,  KC_O,   KC_P, KC_LBRC, KC_RBRC,  KC_BSLS,  KC_END,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,    KC_I,  KC_O,   KC_P, KC_LBRC, KC_RBRC,  KC_BSLS,   KC_DEL,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGUP,
         KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_PGDN,
         KC_LCTL, TD(LOPT_OSL), KC_LCMD,                   KC_SPC,                   TD(RCMD_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
@@ -261,36 +262,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [FN_LAYR] (green)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    |      ||      ||ViRepl||      |    |ChkOut||      ||      ||GitLog|    |GitAdd||Commit||      || Push |    | Ins  |  :
+//  :  |      |    |      ||      ||ViRepl||      |    |ChkOut||      ||      ||GitLog|    |GitAdd||Commit||      || Push |    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||Arrow || Wave ||              ||LLock |  :
+//  :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||Arrow || Wave ||              || End  |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-//  :  | MO(TMUX) ||WMail2||WMail1||Mail  ||RPhone||WPhone||      ||      ||      ||      ||      || Rec1 || Rec2 ||          ||      |  :
+//  :  | MO(TMUX) ||WMail2||WMail1||Mail  ||RPhone||WPhone||      ||      ||      ||      ||      || Rec1 || Rec2 ||          || Ins  |  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-//  :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead ||SLock || PScr ||               ||      |  :
+//  :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead ||SLock || PScr ||               || Home |  :
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-//  :  | MO(SFT)         ||      ||Rout  ||Acct  ||      ||      ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      ||      |  :
+//  :  | MO(SFT)         ||      ||Rout  ||Acct  ||      ||      ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      || End  |  :
 //  :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 //  :  |         || WM_SYM || MO(CTL) || Space                                        || MO(CTL) ||         |  |      ||      ||      |  :
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [FN_LAYR] = LAYOUT_ansi(
-        _______,_______,_______, VI_REPLACE, _______, GIT_CHKOUT, _______,_______, GIT_LOG, GIT_ADD, GIT_COMMIT,_______, GIT_PUSH, KC_INS,
-        _______,_______,_______, _______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,  _______,     LLOCK,
-        MO(TMUX_LAYR),SECRET3,SECRET2,SECRET1,SECRET8,SECRET9,_______,_______,_______,_______,_______, DM_REC1, DM_REC2, _______, _______,
-        _______,SECRET4,SECRET5, SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, KC_SCRL, KC_PSCR,        _______, _______,
-        MO(SFT_LAYR),_______,SECRET10,SECRET11,_______,_______,_______,_______, DM_PLY1, DM_PLY2, KC_PAUS, MO(SFT_LAYR), _______, _______,
+        _______,_______,_______, VI_REPLACE, _______, GIT_CHKOUT, _______,_______, GIT_LOG, GIT_ADD, GIT_COMMIT,_______, GIT_PUSH,  LLOCK,
+        _______,_______,_______, _______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,  _______,    KC_END,
+        MO(TMUX_LAYR),SECRET3,SECRET2,SECRET1,SECRET8,SECRET9,_______,_______,_______,_______,_______, DM_REC1, DM_REC2, _______,  KC_INS,
+        _______,SECRET4,SECRET5, SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, KC_SCRL, KC_PSCR,        _______, KC_HOME,
+        MO(SFT_LAYR),_______,SECRET10,SECRET11,_______,_______,_______,_______, DM_PLY1, DM_PLY2, KC_PAUS, MO(SFT_LAYR), _______,  KC_END,
         _______,   WM_SYM, MO(CTL_LAYR),                  _______,                    MO(CTL_LAYR), _______,    _______, _______, _______
     ),
 
 //  [SFT_LAYR] (yellow/orange)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    |MyComp||      || Calc || Menu |    |      || Prev || Play || Next |    |      || Mute || Vol- || Vol+ |    | Num  |  :
+//  :  |      |    |MyComp||      || Calc || Menu |    |      || Prev || Play || Next |    |      || Mute || Vol- || Vol+ |    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||              ||LLock |  :
+//  :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||              || Num  |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 //  :  |          ||      ||      ||      ||      ||      ||      ||  P7  ||  P8  ||  P9  || +  - ||      ||      ||          ||      |  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
@@ -302,8 +303,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [SFT_LAYR] = LAYOUT_ansi(
-        _______,KC_MYCM, _______, KC_CALC, KC_APP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_MUTE, KC_VOLD, KC_VOLU,         KC_NUM,
-        _______,_______,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, LLOCK,
+        _______,KC_MYCM, _______, KC_CALC, KC_APP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_MUTE, KC_VOLD, KC_VOLU,          LLOCK,
+        _______,_______,_______,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_NUM,
         _______,_______,_______,_______, _______, _______, _______, KC_P7, KC_P8, KC_P9, DUAL_PLUSMIN, _______, _______, _______, _______,
         _______,_______,_______,_______,_______, _______, _______, KC_P4, KC_P5, KC_P6, DUAL_MULTDIV, _______,          _______,  MK_HOLD,
         _______,MK_ACCEL2, _______,_______,_______,_______, _______, KC_P1, KC_P2, KC_P3, _______,          _______, KC_MS_UP, KC_MS_BTN2,
@@ -313,12 +314,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [CTL_LAYR] (red)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    |RMode+||RMode-||      ||      |    |RHue+ ||RHue- ||RSat+ ||RSat- |    |      ||      ||ClrTst||Debug |    |RGBTog|  :
+//  :  |      |    |RMode+||RMode-||      ||      |    |RHue+ ||RHue- ||RSat+ ||RSat- |    |      ||      ||ClrTst||Debug |    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  | USB  || BT1  || BT2  || BT3  || 2.4G ||      ||      ||      ||      ||      ||      ||      ||      ||              ||LLock |  :
+//  :  | USB  || BT1  || BT2  || BT3  || 2.4G ||      ||      ||      ||      ||      ||      ||      ||      ||              ||      |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-//  :  |          ||      ||      ||      ||Reboot||      ||      ||      ||      ||      ||      ||      ||      || ChngBase ||      |  :
+//  :  |          ||      ||      ||      ||Reboot||      ||      ||      ||      ||      ||      ||      ||      || ChngBase ||RGBTog|  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 //  :  |             ||      ||      ||      ||Flash ||      ||      ||      ||      ||      ||KTrack||FJLite|| HomeRowLight  ||      |  :
 //  :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
@@ -328,9 +329,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [CTL_LAYR] = LAYOUT_ansi(
-        _______, RGB_MOD, RGB_RMOD, _______,_______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, _______, _______, COLORTEST, DB_TOGG,    RGB_TOG,
-        KC_USB, KC_BT1, KC_BT2, KC_BT3, KC_2G4, _______,_______,_______, _______, _______, _______, _______, _______, _______,      LLOCK,
-        _______,_______,_______,_______, QK_RBT, _______,_______, _______, _______, _______, _______, _______, _______, BASE_CHG, _______,
+        _______, RGB_MOD, RGB_RMOD, _______, _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  _______, _______, COLORTEST, DB_TOGG,    LLOCK,
+        KC_USB, KC_BT1, KC_BT2, KC_BT3, KC_2G4, _______,_______,_______, _______, _______, _______, _______, _______, _______,    _______,
+        _______,_______,_______,_______, QK_RBT, _______,_______, _______, _______, _______, _______, _______, _______, BASE_CHG, RGB_TOG,
         _______,_______,_______,_______, FLASH_KB, _______,_______, _______, _______, _______, KTRACK, FJLIGHT,   HROWLIGHT,      _______,
         _______,_______,_______, EE_CLR, _______, BOOTLDR, _______,_______,_______, _______, _______,           _______, RGB_VAI, _______,
         _______,_______,_______,                          KC_BATQ,                     _______, _______,        RGB_SPD, RGB_VAD, RGB_SPI
@@ -339,10 +340,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [TMUX_LAYR] (cyan)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    |TLEKY ||TLCMD ||      ||      |    |TMONON||TMONOF||TVISON||TVISOF|    |TJPANE||      ||WINLFT||WINRGT|    |      |  :
+//  :  |      |    |TLEKY ||TLCMD ||      ||      |    |TMONON||TMONOF||TVISON||TVISOF|    |TJPANE||      ||WINLFT||WINRGT|    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  |      ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||LLock |  :
+//  :  |      ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||      |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 //  :  |          ||LTRANS||LTRANS||      ||      ||LTRANS||      ||      ||      ||LTRANS||LTRANS||LTRANS||LTRANS||          ||      |  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
@@ -354,8 +355,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [TMUX_LAYR] = LAYOUT_ansi(
-        _______, TMUXLKEY, TMUXLCMD, _______, _______,  TMONON, TMONOF, TVISON, TVISOF,  TJPANE, _______, TWINLFT, TWINRGT,   _______,
-        _______, LTRANS,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,    LLOCK,
+        _______, TMUXLKEY, TMUXLCMD, _______, _______,  TMONON, TMONOF, TVISON, TVISOF,  TJPANE, _______, TWINLFT, TWINRGT,     LLOCK,
+        _______, LTRANS,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,  _______,
         _______,    LTRANS,LTRANS, _______,_______,LTRANS,_______,_______,_______,LTRANS, LTRANS, LTRANS, LTRANS, _______,    _______,
         _______,        _______,LTRANS,LTRANS, _______,_______,_______,_______,_______, LTRANS, LTRANS, LTRANS,     _______,   LTRANS,
         _______,          LTRANS, LTRANS, LTRANS, _______,_______, LTRANS, _______,LTRANS,LTRANS,LTRANS,    _______,  LTRANS, _______,
@@ -365,10 +366,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [SYMBOL_LAYR] (blue)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    | SUP1 || SUP2 || SUP3 ||      |    |SUITH ||SUITD ||SUITC ||SUITS |    |      ||      ||      || NBSP |    |      |  :
+//  :  |      |    | SUP1 || SUP2 || SUP3 ||      |    |SUITH ||SUITD ||SUITC ||SUITS |    |      ||      ||      || NBSP |    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  |TD(G) ||TD(O1)||OPT2  ||OPT3  ||OPT4  ||OPT5  ||OPT6  ||OPT7  ||OPT8  ||OPT9  ||OPT0  ||OPTMIN||OPTEQ ||              ||LLock |  :
+//  :  |TD(G) ||TD(O1)||OPT2  ||OPT3  ||OPT4  ||OPT5  ||OPT6  ||OPT7  ||OPT8  ||OPT9  ||OPT0  ||OPTMIN||OPTEQ ||              ||      |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 //  :  |          ||OPTQ  ||OPTW  ||TD(E) ||OPTR  ||OPTT  ||OPTY  ||TD(U) ||TD(I) ||OPTO  ||OPTP  ||OPTLBR||OPTRBR||OPTBSL    ||      |  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
@@ -380,8 +381,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [SYMBOL_LAYR] = LAYOUT_ansi(
-        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     _______, _______, _______, NBSP,     _______,
-        TD(ACT_GRV), TD(ACT_1), OPT2, OPT3, OPT4, OPT5,  OPT6,   OPT7,  OPT8,   OPT9,  OPT0,   OPTMIN,  OPTEQ,       _______,     LLOCK,
+        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,      _______, _______, _______, NBSP,      LLOCK,
+        TD(ACT_GRV), TD(ACT_1), OPT2, OPT3, OPT4, OPT5,  OPT6,   OPT7,  OPT8,   OPT9,  OPT0,   OPTMIN,  OPTEQ,       _______,   _______,
         _______,    OPTQ,  OPTW, TD(ACT_E), OPTR,  OPTT,   OPTY, TD(ACT_U), TD(ACT_I), OPTO, OPTP,  OPTLBR,  OPTRBR, OPTBSL,    _______,
         _______,        OPTA,  OPTS,  OPTD,  OPTF,   OPTG,     OPTH,   OPTJ,   OPTK,   OPTL,   OPTSEM, OPTAPO,      _______,    _______,
         _______,           OPTZ,  OPTX,  OPTC,   OPTV,   OPTB, TD(ACT_N),  OPTM,   OPTCOM,  OPTDOT, OPTSLS,   _______, _______, _______,
@@ -392,10 +393,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [MAC_SYMBOL_LAYR] (blue)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      |  :
+//  :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||LLock |  :
+//  :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||      |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 //  :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||      |  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
@@ -407,8 +408,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_SYMBOL_LAYR] = LAYOUT_ansi(
-        _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,
-        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,    LLOCK,
+        _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,    LLOCK,
+        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,  _______,
         _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______,
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
         KC_LSFT,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    KC_RSFT, _______, _______,
@@ -418,10 +419,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [WIDE_TEXT_LAYR] (blue)
 //  ,------------------------------------------------------------------------------------------------------------------------------------,
 //  :   ______      ______________________________      ______________________________      ______________________________      ______   :
-//  :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      |  :
+//  :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |LLock |  :
 //  :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 //  :   ______________________________________________________________________________________________________________________________   :
-//  :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||LLock |  :
+//  :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||      |  :
 //  :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 //  :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||BarTxt|  :
 //  :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
@@ -433,8 +434,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 //  `------------------------------------------------------------------------------------------------------------------------------------`
     [WIDE_TEXT_LAYR] = LAYOUT_ansi(
-        _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,
-        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,    LLOCK,
+        _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,    LLOCK,
+        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,  _______,
         _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    BARTEXT,
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,     STHRU,
         _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, UNDERLN,
@@ -490,7 +491,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 enum key_indexes {
     I_INDICATOR = 0,
     I_ESC = 0,
-    I_NUMLOCK = 13,
+    I_LLOCK = 13,
     I_GRV = 14,
     I_1 = 15,
     I_2 = 16,
@@ -505,7 +506,7 @@ enum key_indexes {
     I_MIN = 25,
     I_PLUS = 26,
     I_HOME = 28,
-    I_LLOCK = 28,
+    I_NUMLOCK = 28,
     I_TAB = 29,
     I_Q = 30,
     I_W = 31,
@@ -519,7 +520,7 @@ enum key_indexes {
     I_P = 39,
     I_MREC1 = 40,
     I_MREC2 = 41,
-    I_ENDPGUP = 43,
+    I_DELPGUP = 43,
     I_BARTEXT = 43,
     I_CAPS = 44,
     I_A = 45,
@@ -1068,12 +1069,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_ESC);
         }
         break;
-    // this is setup so I can use F12 key to insert a delay while recording a macro
+    // this is setup so I can use key to insert a delay while recording a macro
     case DUAL_F12:
+    case DUAL_F13:
         if (record->event.pressed) {
            if (!macro_recording && !is_macro_playing) { 
                // send F12 
-               register_code(KC_F12);
+               register_code(keycode == DUAL_F12 ? KC_F12 : KC_F13);
            }
            else {
                // if macro is recording or playing, insert a delay
@@ -1083,7 +1085,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         else {
            if (!macro_recording && !is_macro_playing) {
-               unregister_code(KC_F12);
+               unregister_code(keycode == DUAL_F12 ? KC_F12 : KC_F13);
            }
         }
         break; 
@@ -2225,7 +2227,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         } 
         rgb_matrix_set_color(I_HOME, RGB_WHITE);                // home
         if (timer_elapsed(base_change_timer) > 300) {
-            rgb_matrix_set_color(I_ENDPGUP, RGB_WHITE);         // pgup/end
+            rgb_matrix_set_color(I_DELPGUP, RGB_WHITE);         // pgup/del
         }
         if (timer_elapsed(base_change_timer) > 600) {
             rgb_matrix_set_color(I_PGUPPGDN, RGB_WHITE);        // pgdn/pgup 
@@ -2430,7 +2432,7 @@ bool key_should_fade(keytracker key, uint8_t layer) {
         (key.index == I_LSFT || key.index == I_RSFT)) ||                                                         // l/r shift
       ((layer == FN_LAYR || layer == CTL_LAYR) && (key.index == I_LALT || key.index == I_RALT)) ||               // l/r alt
       (macro_recording && (key.index == I_MREC1 || key.index == I_MREC2)) ||                                     // macro recording keys
-      (is_layer_locked(layer) && key.index == I_LLOCK) ||                                                        // home (layer lock key)
+      (is_layer_locked(layer) && key.index == I_LLOCK) ||                                                        // layer lock key
       (is_in_leader_sequence && key.index == I_L) ||                                                             // leader key
       (layer == SFT_LAYR && (key.index == I_NUMLOCK || key.index == I_PGUPPGDN)) ||                              // num lock, mouse hold
       (layer == FN_LAYR && key.index == I_SLOCK) ||                                                              // scroll lock
