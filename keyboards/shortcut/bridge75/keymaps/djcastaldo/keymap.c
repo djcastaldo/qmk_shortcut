@@ -120,6 +120,7 @@ enum custom_keycodes {
     SUITD,
     SUITC,
     SUITS,
+    CIRCLEI,
     SUP1,
     SUP2,
     SUP3,
@@ -366,7 +367,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [SYMBOL_LAYR] (blue)
 // ,------------------------------------------------------------------------------------------------------------------------------------,
 // :   ______      ______________________________      ______________________________      ______________________________      ______   :
-// :  |      |    | SUP1 || SUP2 || SUP3 ||      |    |SUITH ||SUITD ||SUITC ||SUITS |    |      ||      ||      || NBSP |    |LLock |  :
+// :  |      |    | SUP1 || SUP2 || SUP3 ||      |    |SUITH ||SUITD ||SUITC ||SUITS |    |CIRCLI||      ||      || NBSP |    |LLock |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
 // :  |TD(G) ||TD(O1)||OPT2  ||OPT3  ||OPT4  ||OPT5  ||OPT6  ||OPT7  ||OPT8  ||OPT9  ||OPT0  ||OPTMIN||OPTEQ ||              ||      |  :
@@ -381,7 +382,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [SYMBOL_LAYR] = LAYOUT_ansi(
-        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,      _______, _______, _______, NBSP,      LLOCK,
+        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLEI, _______, _______, NBSP,       LLOCK,
         TD(ACT_GRV), TD(ACT_1), OPT2, OPT3, OPT4, OPT5,  OPT6,   OPT7,  OPT8,   OPT9,  OPT0,   OPTMIN,  OPTEQ,       _______,   _______,
         _______,    OPTQ,  OPTW, TD(ACT_E), OPTR,  OPTT,   OPTY, TD(ACT_U), TD(ACT_I), OPTO, OPTP,  OPTLBR,  OPTRBR, OPTBSL,    _______,
         _______,        OPTA,  OPTS,  OPTD,  OPTF,   OPTG,     OPTH,   OPTJ,   OPTK,   OPTL,   OPTSEM, OPTAPO,      _______,    _______,
@@ -1683,6 +1684,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             else {
                 symbol_key("6","6");
+            }
+        }
+        break;
+    case CIRCLEI:
+        if (record->event.pressed) {
+            if (user_config.is_linux_base) {
+                symbol_key_linux("24d8","24be");
+            }
+            else {
+                symbol_key("9432","9406");
             }
         }
         break;
