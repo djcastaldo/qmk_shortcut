@@ -265,11 +265,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |      |    |      ||      ||ViRepl||      |    |ChkOut||      ||      ||GitLog|    |GitAdd||Commit||      || Push |    |LLock |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
-// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||Arrow || Wave ||              ||      |  :
+// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||Arrow || Wave ||              ||SLock |  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 // :  | MO(TMUX) ||WMail2||WMail1||Mail  ||RPhone||WPhone||      ||      ||      ||      ||      || Rec1 || Rec2 ||          ||      |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead ||SLock || PScr ||               ||HomIns|  :
+// :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead ||      || PScr ||               ||HomIns|  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 // :  | MO(SFT)         ||      ||Rout  ||Acct  ||      ||      ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      ||EndDel|  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
@@ -278,9 +278,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [FN_LAYR] = LAYOUT_ansi(
         _______,_______,_______, VI_REPLACE,_______, GIT_CHKOUT, _______,_______, GIT_LOG, GIT_ADD, GIT_COMMIT,_______, GIT_PUSH,  LLOCK,
-        _______,_______,_______,_______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,  _______,   _______,
+        _______,_______,_______,_______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,  _______,   KC_SCRL,
         MO(TMUX_LAYR),SECRET3,SECRET2,SECRET1,SECRET8,SECRET9,_______,_______,_______,_______,_______,DM_REC1, DM_REC2, _______, _______,
-        _______,SECRET4,SECRET5,SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, KC_SCRL, KC_PSCR,        _______, KC_HOME,
+        _______,SECRET4,SECRET5,SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, _______, KC_PSCR,        _______, KC_HOME,
         MO(SFT_LAYR),_______,SECRET10,SECRET11,_______,_______,_______,_______,DM_PLY1, DM_PLY2, KC_PAUS, MO(SFT_LAYR), _______,  KC_END,
         _______,  WM_SYM, MO(CTL_LAYR),                  _______,                    MO(CTL_LAYR), _______,    _______, _______, _______
     ),
@@ -507,6 +507,7 @@ enum key_indexes {
     I_PLUS = 26,
     I_INSHOME = 28,
     I_NUMLOCK = 28,
+    I_SLOCK = 28,
     I_TAB = 29,
     I_Q = 30,
     I_W = 31,
@@ -533,7 +534,7 @@ enum key_indexes {
     I_K = 52,
     I_L = 53,
     I_SEMI = 54,
-    I_SLOCK = 54,
+    I_KTRACK = 54,
     I_FJLIGHT = 55,
     I_HROWLIGHT = 56,
     I_PGUPPGDN = 57,
@@ -2313,13 +2314,13 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (layer == CTL_LAYR)
     {
         if (fj_light) {
-            rgb_matrix_set_color(I_FJLIGHT, RGB_WHITE);     // home (fj highlight key)
+            rgb_matrix_set_color(I_FJLIGHT, RGB_WHITE);     // fj highlight key
         }
         if (hrow_light) {
-            rgb_matrix_set_color(I_HROWLIGHT, RGB_WHITE);   // end (hrow highlight key)
+            rgb_matrix_set_color(I_HROWLIGHT, RGB_WHITE);   // hrow highlight key
         }
         if (enable_keytracker) {
-            rgb_matrix_set_color(I_SEMI, RGB_WHITE);        // semi (keytracker set key)
+            rgb_matrix_set_color(I_KTRACK, RGB_WHITE);      // keytracker set key
         }
     }
 
