@@ -37,11 +37,12 @@ enum layers {
     SYMBOL_LAYR,
     MAC_SYMBOL_LAYR,
     WIDE_TEXT_LAYR,
+    CIRCLE_TEXT_LAYR,
     LOCK_LAYR
 };
 
 
-// custom keycodes
+// CUSTOM KEycodes
 enum custom_keycodes {
     BSPCFAST = NEW_SAFE_RANGE,
     ARROW,
@@ -120,11 +121,46 @@ enum custom_keycodes {
     SUITD,
     SUITC,
     SUITS,
-    CIRCLEI,
     SUP1,
     SUP2,
     SUP3,
     NBSP,
+    CIRCL1,
+    CIRCL2,
+    CIRCL3,
+    CIRCL4,
+    CIRCL5,
+    CIRCL6,
+    CIRCL7,
+    CIRCL8,
+    CIRCL9,
+    CIRCL0,
+    CIRCLQ,
+    CIRCLW,
+    CIRCLE,
+    CIRCLR,
+    CIRCLT,
+    CIRCLY,
+    CIRCLU,
+    CIRCLI,
+    CIRCLO,
+    CIRCLP,
+    CIRCLA,
+    CIRCLS,
+    CIRCLD,
+    CIRCLF,
+    CIRCLG,
+    CIRCLH,
+    CIRCLJ,
+    CIRCLK,
+    CIRCLL,
+    CIRCLZ,
+    CIRCLX,
+    CIRCLC,
+    CIRCLV,
+    CIRCLB,
+    CIRCLN,
+    CIRCLM,
     WM_SYM,
     STHRU,
     UNDERLN,
@@ -382,7 +418,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [SYMBOL_LAYR] = LAYOUT_ansi(
-        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLEI, _______, _______, NBSP,       LLOCK,
+        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLI, _______, _______, NBSP,        LLOCK,
         TD(ACT_GRV), TD(ACT_1), OPT2, OPT3, OPT4, OPT5,  OPT6,   OPT7,  OPT8,   OPT9,  OPT0,   OPTMIN,  OPTEQ,       _______,   _______,
         _______,    OPTQ,  OPTW, TD(ACT_E), OPTR,  OPTT,   OPTY, TD(ACT_U), TD(ACT_I), OPTO, OPTP,  OPTLBR,  OPTRBR, OPTBSL,    _______,
         _______,        OPTA,  OPTS,  OPTD,  OPTF,   OPTG,     OPTH,   OPTJ,   OPTK,   OPTL,   OPTSEM, OPTAPO,      _______,    _______,
@@ -409,7 +445,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_SYMBOL_LAYR] = LAYOUT_ansi(
-        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLEI, _______, _______, NBSP,       LLOCK,
+        _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLI, _______, _______, NBSP,        LLOCK,
         LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,  _______,
         _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______,
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
@@ -417,7 +453,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
     ),
 
-//  [WIDE_TEXT_LAYR] (blue)
+//  [WIDE_TEXT_LAYR] (purple)
 // ,------------------------------------------------------------------------------------------------------------------------------------,
 // :   ______      ______________________________      ______________________________      ______________________________      ______   :
 // :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |LLock |  :
@@ -440,7 +476,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    BARTEXT,
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,     STHRU,
         _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, UNDERLN,
-        _______,  _______,  _______,                        LTRANS,                      _______,  _______,  _______, _______, _______
+        _______,  _______,  _______,                        LTRANS,                      _______,  _______,   _______, _______, _______
+    ),
+
+//  [CIRCLE_TEXT_LAYR] (coral)
+// ,------------------------------------------------------------------------------------------------------------------------------------,
+// :   ______      ______________________________      ______________________________      ______________________________      ______   :
+// :  |      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |      ||      ||      ||      |    |LLock |  :
+// :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
+// :   ______________________________________________________________________________________________________________________________   :
+// :  |      ||CIRCL1||CIRCL2||CIRCL3||CIRCL4||CIRCL5||CIRCL6||CIRCL7||CIRCL8||CIRCL9||CIRCL0||      ||      ||              ||      |  :
+// :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
+// :  |          ||CIRCLQ||CIRCLW||CIRCLE||CIRCLR||CIRCLT||CIRCLY||CIRCLU||CIRCLI||CIRCLO||CIRCLP||      ||      ||          ||      |  :
+// :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
+// :  |             ||CIRCLA||CIRCLS||CIRCLD||CIRCLF||CIRCLG||CIRCLH||CIRCLJ||CIRCLK||CIRCLL||      ||      ||               ||      |  :
+// :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
+// :  |                 ||CIRCLZ||CIRCLX||CIRCLC||CIRCLV||CIRCLB||CIRCLN||CIRCLM||      ||      ||      ||           ||      ||      |  :
+// :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
+// :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
+// :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
+// `------------------------------------------------------------------------------------------------------------------------------------`
+    [CIRCLE_TEXT_LAYR] = LAYOUT_ansi(
+        _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,    LLOCK,
+        _______,  CIRCL1, CIRCL2, CIRCL3, CIRCL4, CIRCL5, CIRCL6, CIRCL7, CIRCL8, CIRCL9, CIRCL0, _______, _______,    _______, _______,
+        _______,     CIRCLQ, CIRCLW, CIRCLE, CIRCLR, CIRCLT, CIRCLY, CIRCLU, CIRCLI ,CIRCLO, CIRCLP, _______, _______, _______, _______,
+        _______,         CIRCLA, CIRCLS, CIRCLD, CIRCLF, CIRCLG, CIRCLH, CIRCLJ, CIRCLK, CIRCLL, _______, _______,     _______, _______,
+        _______,           CIRCLZ, CIRCLX, CIRCLC, CIRCLV, CIRCLB, CIRCLN, CIRCLM, _______, _______, _______, _______, _______, _______,
+        _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
     ),
 
 //  [LOCK_LAYR]
@@ -1740,7 +1802,241 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         break;
-    case CIRCLEI:
+    case NBSP:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("00a0","00a6");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("00a0","00a6");
+            }
+            else {
+                symbol_key("0160","0166");
+            }
+        }
+        break;
+    case CIRCL1:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2460","246a");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2460","246a");
+            }
+            else {
+                symbol_key("9312","9322");
+            }
+        }
+        break;
+    case CIRCL2:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2461","246b");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2461","246b");
+            }
+            else {
+                symbol_key("9313","9323");
+            }
+        }
+        break;
+    case CIRCL3:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2462","246c");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2462","246c");
+            }
+            else {
+                symbol_key("9314","9324");
+            }
+        }
+        break;
+    case CIRCL4:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2463","246d");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2463","246d");
+            }
+            else {
+                symbol_key("9315","9325");
+            }
+        }
+        break;
+    case CIRCL5:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2464","246e");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2464","246e");
+            }
+            else {
+                symbol_key("9316","9326");
+            }
+        }
+        break;
+    case CIRCL6:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2465","246f");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2465","246f");
+            }
+            else {
+                symbol_key("9317","9327");
+            }
+        }
+        break;
+    case CIRCL7:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2466","2470");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2466","2470");
+            }
+            else {
+                symbol_key("9318","9328");
+            }
+        }
+        break;
+    case CIRCL8:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2467","2471");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2467","2471");
+            }
+            else {
+                symbol_key("9319","9329");
+            }
+        }
+        break;
+    case CIRCL9:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("2468","2472");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("2468","2472");
+            }
+            else {
+                symbol_key("9320","9330");
+            }
+        }
+        break;
+    case CIRCL0:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24ea","2469");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24ea","2469");
+            }
+            else {
+                symbol_key("9450","9321");
+            }
+        }
+        break;
+    case CIRCLQ:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e0","24c6");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e0","24c6");
+            }
+            else {
+                symbol_key("9440","9414");
+            }
+        }
+        break;
+    case CIRCLW:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e6","24cc");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e6","24cc");
+            }
+            else {
+                symbol_key("9446","9420");
+            }
+        }
+        break;
+    case CIRCLE:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d4","24ba");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d4","24ba");
+            }
+            else {
+                symbol_key("9428","9402");
+            }
+        }
+        break;
+    case CIRCLR:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e1","24c7");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e1","24c7");
+            }
+            else {
+                symbol_key("9441","9415");
+            }
+        }
+        break;
+    case CIRCLT:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e3","24c9");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e3","24c9");
+            }
+            else {
+                symbol_key("9443","9417");
+            }
+        }
+        break;
+    case CIRCLY:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e8","24ce");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e8","24ce");
+            }
+            else {
+                symbol_key("9448","9422");
+            }
+        }
+        break;
+    case CIRCLU:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e4","24ca");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e4","24ca");
+            }
+            else {
+                symbol_key("9444","9418");
+            }
+        }
+        break;
+    case CIRCLI:
         if (record->event.pressed) {
             if (is_mac_base()) {
                 symbol_key_mac("24d8","24be");
@@ -1753,16 +2049,237 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
         break;
-    case NBSP:
+    case CIRCLO:
         if (record->event.pressed) {
             if (is_mac_base()) {
-                symbol_key_mac("00a0","00a6");
+                symbol_key_mac("24de","24c4");
             }
             else if (user_config.is_linux_base) {
-                symbol_key_linux("00a0","00a6");
+                symbol_key_linux("24de","24c4");
             }
             else {
-                symbol_key("0160","0166");
+                symbol_key("9438","9412");
+            }
+        }
+        break;
+    case CIRCLP:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24df","24c5");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24df","24c5");
+            }
+            else {
+                symbol_key("9439","9413");
+            }
+        }
+        break;
+    case CIRCLA:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d0","24b6");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d0","24b6");
+            }
+            else {
+                symbol_key("9424","9398");
+            }
+        }
+        break;
+    case CIRCLS:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e2","24c8");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e2","24c8");
+            }
+            else {
+                symbol_key("9442","9416");
+            }
+        }
+        break;
+    case CIRCLD:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d3","24b9");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d3","24b9");
+            }
+            else {
+                symbol_key("9427","9401");
+            }
+        }
+        break;
+    case CIRCLF:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d5","24bb");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d5","24bb");
+            }
+            else {
+                symbol_key("9429","9403");
+            }
+        }
+        break;
+    case CIRCLG:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d6","24bc");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d6","24bc");
+            }
+            else {
+                symbol_key("9430","9404");
+            }
+        }
+        break;
+    case CIRCLH:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d7","24bd");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d7","24bd");
+            }
+            else {
+                symbol_key("9431","9405");
+            }
+        }
+        break;
+    case CIRCLJ:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d9","24bf");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d9","24bf");
+            }
+            else {
+                symbol_key("9433","9407");
+            }
+        }
+        break;
+    case CIRCLK:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24da","24c0");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24da","24c0");
+            }
+            else {
+                symbol_key("9434","9408");
+            }
+        }
+        break;
+    case CIRCLL:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24db","24c1");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24db","24c1");
+            }
+            else {
+                symbol_key("9435","9409");
+            }
+        }
+        break;
+    case CIRCLZ:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e9","24cf");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e9","24cf");
+            }
+            else {
+                symbol_key("9449","9423");
+            }
+        }
+        break;
+    case CIRCLX:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e7","24cd");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e7","24cd");
+            }
+            else {
+                symbol_key("9447","9421");
+            }
+        }
+        break;
+    case CIRCLC:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d2","24b8");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d2","24b8");
+            }
+            else {
+                symbol_key("9426","9400");
+            }
+        }
+        break;
+    case CIRCLV:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24e5","24cb");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24e5","24cb");
+            }
+            else {
+                symbol_key("9445","9419");
+            }
+        }
+        break;
+    case CIRCLB:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24d1","24b7");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24d1","24b7");
+            }
+            else {
+                symbol_key("9425","9399");
+            }
+        }
+        break;
+    case CIRCLN:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24dd","24c3");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24dd","24c3");
+            }
+            else {
+                symbol_key("9437","9411");
+            }
+        }
+        break;
+    case CIRCLM:
+        if (record->event.pressed) {
+            if (is_mac_base()) {
+                symbol_key_mac("24dc","24c2");
+            }
+            else if (user_config.is_linux_base) {
+                symbol_key_linux("24dc","24c2");
+            }
+            else {
+                symbol_key("9436","9410");
             }
         }
         break;
@@ -2043,6 +2560,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     case WIDE_TEXT_LAYR:
         rgb_matrix_set_color(I_INDICATOR, RGB_PURPLE);
         break;
+    case CIRCLE_TEXT_LAYR:
+        rgb_matrix_set_color(I_INDICATOR, RGB_CORAL);
+        break;
     case LOCK_LAYR:
         break;
     default:
@@ -2079,6 +2599,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                         break;
                     case WIDE_TEXT_LAYR:
                         rgb_matrix_set_color(index, RGB_PURPLE);
+                        break;
+                    case CIRCLE_TEXT_LAYR:
+                        rgb_matrix_set_color(index, RGB_CORAL);
                         break;
                     case LOCK_LAYR:
                         break;
@@ -2162,6 +2685,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 break;
             case WIDE_TEXT_LAYR:
                 rgb_matrix_set_color(I_RSFT, RGB_PURPLE);     // rshift
+                break;
+            case CIRCLE_TEXT_LAYR:
+                rgb_matrix_set_color(I_RSFT, RGB_CORAL);      // rshift
                 break;
             }
         }
@@ -2803,6 +3329,15 @@ void rsft_finished (tap_dance_state_t *state, void *user_data) {
           clear_oneshot_layer_state(ONESHOT_PRESSED);
       }
       break;
+    case SINGLE_HOLD:
+      // check if this is caps word activation, otherwise regular shift
+      if (get_mods() & MOD_BIT(KC_LSFT)) {
+          caps_word_on();
+      }
+      else {
+          register_code(KC_RSFT);
+      }
+      break;
     case DOUBLE_TAP:
       // activate WIDE_TEXT_LAYR
       if (IS_LAYER_ON(WIDE_TEXT_LAYR)) {
@@ -2812,13 +3347,13 @@ void rsft_finished (tap_dance_state_t *state, void *user_data) {
           layer_lock_on(WIDE_TEXT_LAYR);
       }
       break;
-    case SINGLE_HOLD:
-      // check if this is caps word activation, otherwise regular shift
-      if (get_mods() & MOD_BIT(KC_LSFT)) {
-          caps_word_on();
+    case TRIPLE_TAP:
+      // activate CIRCLE_TEXT_LAYR
+      if (IS_LAYER_ON(CIRCLE_TEXT_LAYR)) {
+          layer_lock_off(CIRCLE_TEXT_LAYR);
       }
       else {
-          register_code(KC_RSFT);
+          layer_lock_on(CIRCLE_TEXT_LAYR);
       }
       break;
   }
@@ -2832,8 +3367,6 @@ void rsft_reset (tap_dance_state_t *state, void *user_data) {
           caps_word_on();
       }
       break;
-    case DOUBLE_TAP:
-      break;
     case SINGLE_HOLD:
       if (get_mods() & MOD_BIT(KC_LSFT)) {
           caps_word_on();
@@ -2841,6 +3374,10 @@ void rsft_reset (tap_dance_state_t *state, void *user_data) {
       else {
           unregister_code(KC_RSFT);
       }
+      break;
+    case DOUBLE_TAP:
+      break;
+    case TRIPLE_TAP:
       break;
   }
   rsft_tap_state.state = 0;
