@@ -3033,7 +3033,8 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 bool key_should_fade(keytracker key, uint8_t layer) {
     bool should_fade = true;
     if ((key.fade < 1) ||
-      ((layer == FN_LAYR || layer == SFT_LAYR || layer == WIDE_TEXT_LAYR || is_caps_word_on()) && 
+      ((layer == FN_LAYR || layer == SFT_LAYR || layer == WIDE_TEXT_LAYR ||
+        layer == CIRCLE_TEXT_LAYR || is_caps_word_on()) &&
         (key.index == I_LSFT || key.index == I_RSFT)) ||                                                         // l/r shift
       ((layer == FN_LAYR || layer == CTL_LAYR) && (key.index == I_LALT || key.index == I_RALT)) ||               // l/r alt
       (macro_recording && (key.index == I_MREC1 || key.index == I_MREC2)) ||                                     // macro recording keys
