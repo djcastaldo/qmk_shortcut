@@ -1817,131 +1817,302 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
     case CIRCL1:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2460","246a");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2460","246a");
-            }
-            else {
-                symbol_key("9312","9322");
+            // check mods first so can do a double-cirled number if alt is held
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24f5","24f5");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24f5","24f5");
+                }
+                else {
+                    symbol_key("9461","9461");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2460","246a");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2460","246a");
+                }
+                else {
+                    symbol_key("9312","9322");
+                }
             }
         }
         break;
     case CIRCL2:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2461","246b");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2461","246b");
-            }
-            else {
-                symbol_key("9313","9323");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24f6","24f6");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24f6","24f6");
+                }
+                else {
+                    symbol_key("9462","9462");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2461","246b");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2461","246b");
+                }
+                else {
+                    symbol_key("9313","9323");
+                }
             }
         }
         break;
     case CIRCL3:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2462","246c");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2462","246c");
-            }
-            else {
-                symbol_key("9314","9324");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24f7","24f7");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24f7","24f7");
+                }
+                else {
+                    symbol_key("9463","9463");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2462","246c");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2462","246c");
+                }
+                else {
+                    symbol_key("9314","9324");
+                }
             }
         }
         break;
     case CIRCL4:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2463","246d");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2463","246d");
-            }
-            else {
-                symbol_key("9315","9325");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24f8","24f8");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24f8","24f8");
+                }
+                else {
+                    symbol_key("9464","9464");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2463","246d");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2463","246d");
+                }
+                else {
+                    symbol_key("9315","9325");
+                }
             }
         }
         break;
     case CIRCL5:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2464","246e");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2464","246e");
-            }
-            else {
-                symbol_key("9316","9326");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24f9","24f9");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24f9","24f9");
+                }
+                else {
+                    symbol_key("9465","9465");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2464","246e");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2464","246e");
+                }
+                else {
+                    symbol_key("9316","9326");
+                }
             }
         }
         break;
     case CIRCL6:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2465","246f");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2465","246f");
-            }
-            else {
-                symbol_key("9317","9327");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24fa","24fa");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24fa","24fa");
+                }
+                else {
+                    symbol_key("9466","9466");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2465","246f");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2465","246f");
+                }
+                else {
+                    symbol_key("9317","9327");
+                }
             }
         }
         break;
     case CIRCL7:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2466","2470");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2466","2470");
-            }
-            else {
-                symbol_key("9318","9328");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24fb","24fb");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24fb","24fb");
+                }
+                else {
+                    symbol_key("9467","9467");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2466","2470");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2466","2470");
+                }
+                else {
+                    symbol_key("9318","9328");
+                }
             }
         }
         break;
     case CIRCL8:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2467","2471");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2467","2471");
-            }
-            else {
-                symbol_key("9319","9329");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24fc","24fc");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24fc","24fc");
+                }
+                else {
+                    symbol_key("9468","9468");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2467","2471");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2467","2471");
+                }
+                else {
+                    symbol_key("9319","9329");
+                }
             }
         }
         break;
     case CIRCL9:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("2468","2472");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("2468","2472");
-            }
-            else {
-                symbol_key("9320","9330");
-            }
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) {
+                    symbol_key_mac("24fd","24fd");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24fd","24fd");
+                }
+                else {
+                    symbol_key("9469","9469");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("2468","2472");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("2468","2472");
+                }
+                else {
+                    symbol_key("9320","9330");
+                }
+            }   
         }
         break;
     case CIRCL0:
         if (record->event.pressed) {
-            if (is_mac_base()) {
-                symbol_key_mac("24ea","2469");
-            }
-            else if (user_config.is_linux_base) {
-                symbol_key_linux("24ea","2469");
-            }
-            else {
-                symbol_key("9450","9321");
+            const uint8_t mods = get_mods();
+            const uint8_t oneshot_mods = get_oneshot_mods();
+            if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
+                del_oneshot_mods(MOD_MASK_CTRL);
+                unregister_mods(MOD_MASK_CTRL);
+                if (is_mac_base()) { // this one can do both double circle 10 and a circle 20
+                    symbol_key_mac("24fe","2473");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24fe","2473");
+                }
+                else {
+                    symbol_key("9470","9331");
+                }
+                register_mods(mods);
+            } else {
+                if (is_mac_base()) {
+                    symbol_key_mac("24ea","2469");
+                }
+                else if (user_config.is_linux_base) {
+                    symbol_key_linux("24ea","2469");
+                }
+                else {
+                    symbol_key("9450","9321");
+                }
             }
         }
         break;
