@@ -42,7 +42,7 @@ enum layers {
 };
 
 
-// CUSTOM KEycodes
+// custom keycodes
 enum custom_keycodes {
     BSPCFAST = NEW_SAFE_RANGE,
     ARROW,
@@ -3346,6 +3346,7 @@ void rsft_finished (tap_dance_state_t *state, void *user_data) {
       }
       else {
           layer_lock_on(WIDE_TEXT_LAYR);
+          wide_firstchar = true;
       }
       break;
     case TRIPLE_TAP:
