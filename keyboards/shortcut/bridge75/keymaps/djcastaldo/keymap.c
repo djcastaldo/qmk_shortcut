@@ -3040,16 +3040,13 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         for (uint8_t i = led_min; i < led_max; i++) {
             rgb_matrix_set_color(i, 0x00, 0x00, 0x00);
         }
-        int os_key1 = is_mac_base() ? I_M : I_W;
+        int os_key1 = is_mac_base() ? I_M : user_config.is_linux_base ? I_L : I_W;
         int os_key2 = is_mac_base() ? I_A : I_I;
         int os_key3 = is_mac_base() ? I_C : I_N;
-        if (!is_mac_base() && user_config.is_linux_base) {
-            os_key1 = I_L;
-        }
         if (!os_change_timer || timer_elapsed(os_change_timer) > 1900) {
             os_change_timer = timer_read();
         } 
-        rgb_matrix_set_color(os_key1, RGB_WHITE);           // M | W | L
+        rgb_matrix_set_color(os_key1, RGB_WHITE);           // M | L | W
         if (timer_elapsed(os_change_timer) > 300) {
             rgb_matrix_set_color(os_key2, RGB_WHITE);       // A | I | I
         }
