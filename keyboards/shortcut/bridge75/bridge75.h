@@ -34,6 +34,8 @@ enum kb_custom_keycodes {
     SECRET23,
     SECRET24,
     SECRET25,
+    SECRET26,
+    SECRET27,
     NEW_SAFE_RANGE
 };
 
