@@ -89,9 +89,9 @@
 
 /* rgb_matrix_indicators_advanced_user settings */
 #    define CONFIG_NO_RCTL_KEY
+#    define CONFIG_HAS_LLOCK_KEY
 #    define CONFIG_RGB_LAYER_INDICATORS { I_INDICATOR }
 #    define CONFIG_RGB_LAYER_INDICATORS_COUNT 1
-#    define CONFIG_HAS_LLOCK_KEY
 #    define CONFIG_FN_LAYR_COLOR RGB_GREEN
 #    define CONFIG_MREC_KEY_COLOR RGB_MAGENTA
 #    define CONFIG_SHIFT_LAYR_COLOR RGB_ORANGE

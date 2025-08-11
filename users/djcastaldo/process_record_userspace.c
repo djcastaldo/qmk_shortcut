@@ -201,62 +201,76 @@ uint32_t wls_action_timer;
 bool process_record_userspace(uint16_t keycode, keyrecord_t *record) {
     static uint32_t key_timer;
     // record key index pressed for rgb reactive changes
-    if (enable_keytracker && !is_macro_playing && keycode != QK_LEAD) {
-        int key_idx = g_led_config.matrix_co[record->event.key.row][record->event.key.col];
-        if (record->event.pressed) {
-            dprintf("%u \n", key_idx);
-            for (int i = tk_length - 1; i > 0; i--) {
-                tracked_keys[i] = tracked_keys[i-1];
-                if (tracked_keys[i].index == key_idx) {
-                    tracked_keys[i].press = true;
-                    tracked_keys[i].fade = 255;
-                }
-            }
-            tracked_keys[0].press = true;
-            tracked_keys[0].fade = 255;
-            tracked_keys[0].index = key_idx;
-        }
-        else {
-            for (int i = 0; i < tk_length; i++) {
-                if (tracked_keys[i].index == key_idx) {
-                    tracked_keys[i].press = false;
-#ifdef CONFIG_KEYFADE_START_VAL
-                    tracked_keys[i].fade = CONFIG_KEYFADE_START_VAL;
-#else
-                    tracked_keys[i].fade = 119;
+    if (enable_keytracker && !is_macro_playing && keycode != QK_LEAD && keycode != KC_NO) {
+        uint8_t key_idx = g_led_config.matrix_co[record->event.key.row][record->event.key.col];
+#ifdef CONFIG_KEY_INDEX_MAX
+        if (key_idx <= CONFIG_KEY_INDEX_MAX) {
 #endif
-                }
-            }
-            // setup the key fade
-            if (key_token) {
-                cancel_deferred_exec(key_token);
-                key_token = INVALID_DEFERRED_TOKEN;
-            }
-            uint32_t keytracker_callback(uint32_t trigger_time, void* cb_arg) {
-                bool fade_changed = false;
-                for (int i = 0; i < tk_length; i++) {
-                    if (!tracked_keys[i].press && tracked_keys[i].fade > 0) {
-                        tracked_keys[i].fade--;
-                        fade_changed = true;
+#ifdef KEYBOARD_IS_YUNZII
+        if (keycode != ENC_VOLU && keycode != ENC_VOLD && keycode != DUAL_ZOOMO && keycode != DUAL_ZOOMI &&
+            keycode != ENC_SCROLLAPPL && keycode != ENC_SCROLLAPPR && keycode != ENC_RGBL && keycode != ENC_RGBR &&
+            keycode != ENC_TSIZEL && keycode != ENC_TSIZER && keycode != ENC_MENUL && keycode != ENC_MENUR) {
+#endif
+            if (record->event.pressed) {
+                dprintf("%u \n", key_idx);
+                for (int i = tk_length - 1; i > 0; i--) {
+                    tracked_keys[i] = tracked_keys[i-1];
+                    if (tracked_keys[i].index == key_idx) {
+                        tracked_keys[i].press = true;
+                        tracked_keys[i].fade = 255;
                     }
                 }
-                if (fade_changed) {
-#ifdef CONFIG_KEYFADE_CALLBACK_INTERVAL
-                    return CONFIG_KEYFADE_CALLBACK_INTERVAL;
-#else
-                    return 12;  // Call the callback every 12ms
-#endif
-                }
-                else {
-                    return 0;
-                }
+                tracked_keys[0].press = true;
+                tracked_keys[0].fade = 255;
+                tracked_keys[0].index = key_idx;
             }
-#ifdef CONFIG_KEYFADE_START_DELAY
-            key_token = defer_exec(CONFIG_KEYFADE_START_DELAY, keytracker_callback, NULL);
+            else {
+                for (int i = 0; i < tk_length; i++) {
+                    if (tracked_keys[i].index == key_idx) {
+                        tracked_keys[i].press = false;
+#ifdef CONFIG_KEYFADE_START_VAL
+                        tracked_keys[i].fade = CONFIG_KEYFADE_START_VAL;
 #else
-            key_token = defer_exec(10, keytracker_callback, NULL);  // Schedule callback.
+                        tracked_keys[i].fade = 119;
 #endif
+                    }
+                }
+                // setup the key fade
+                if (key_token) {
+                    cancel_deferred_exec(key_token);
+                    key_token = INVALID_DEFERRED_TOKEN;
+                }
+                uint32_t keytracker_callback(uint32_t trigger_time, void* cb_arg) {
+                    bool fade_changed = false;
+                    for (int i = 0; i < tk_length; i++) {
+                        if (!tracked_keys[i].press && tracked_keys[i].fade > 0) {
+                            tracked_keys[i].fade--;
+                            fade_changed = true;
+                        }
+                    }
+                    if (fade_changed) {
+#ifdef CONFIG_KEYFADE_CALLBACK_INTERVAL
+                        return CONFIG_KEYFADE_CALLBACK_INTERVAL;
+#else
+                        return 12;  // Call the callback every 12ms
+#endif
+                    }
+                    else {
+                        return 0;
+                    }
+                }
+#ifdef CONFIG_KEYFADE_START_DELAY
+                key_token = defer_exec(CONFIG_KEYFADE_START_DELAY, keytracker_callback, NULL);
+#else
+                key_token = defer_exec(10, keytracker_callback, NULL);  // Schedule callback.
+#endif
+            }
+#ifdef KEYBOARD_IS_YUNZII
         }
+#endif
+#ifdef CONFIG_KEY_INDEX_MAX
+        }
+#endif
     }
 
     // stop color test if active and a key is pressed
@@ -1315,6 +1329,12 @@ bool process_record_userspace(uint16_t keycode, keyrecord_t *record) {
         if (record->event.pressed) {
             color_test_timer = timer_read();
             color_test = true;
+        }
+        return false;
+    // need this on msym layer for keyboards that don't have a grave key
+    case MSYMGRV:
+        if (record->event.pressed) {
+            tap_code(KC_GRV);
         }
         return false;
     // the following OPT keycodes mimic a macos option os layer for symbols and accents
@@ -3198,6 +3218,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             case LOCK_LAYR:
                 break;
             default:
+            #ifdef CONFIG_DEFAULT_INDICATOR_COLOR
+                rgb_matrix_set_color(rgb_layer_indicators[i], CONFIG_DEFAULT_INDICATOR_COLOR);
+            #endif
                 break;
         }
     }
@@ -3305,10 +3328,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             #endif
             #ifdef CONFIG_KCTL_LAYR_COLOR
                 rgb_matrix_set_color(I_LCMD, CONFIG_KCTL_LAYR_COLOR);  // left alt / left cmd
+                #ifndef CONFIG_NO_RCMD_KEY
                 rgb_matrix_set_color(I_RCMD, CONFIG_KCTL_LAYR_COLOR);  // right alt / right cmd 
+                #endif
             #else
                 rgb_matrix_set_color(I_LCMD, RGB_RED);    // left alt / left cmd
+                #ifndef CONFIG_NO_RCMD_KEY
                 rgb_matrix_set_color(I_RCMD, RGB_RED);    // right alt / right cmd 
+                #endif
             #endif
             #ifdef CONFIG_TMUX_LAYR_COLOR
                 rgb_matrix_set_color(I_TAB, CONFIG_TMUX_LAYR_COLOR);   // tab
@@ -3320,14 +3347,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 #ifdef CONFIG_HAS_ROPT_KEY
                 rgb_matrix_set_color(I_ROPT, CONFIG_SYM_LAYR_COLOR);   // right win / right opt 
                 #else
-                rgb_matrix_set_color(I_FN, CONFIG_SYM_LAYR_COLOR);     // if no ropt, light fn 
+                rgb_matrix_set_color(I_FN, CONFIG_SYM_LAYR_COLOR);     // if no ropt, light fn
                 #endif
             #else
                 rgb_matrix_set_color(I_LGUI, RGB_BLUE);   // left win / left opt 
                 #ifdef CONFIG_HAS_ROPT_KEY
                 rgb_matrix_set_color(I_ROPT, RGB_BLUE);   // right win / right opt 
                 #else
-                rgb_matrix_set_color(I_FN, RGB_BLUE);     // if no ropt, light fn 
+                rgb_matrix_set_color(I_FN, RGB_BLUE);     // if no ropt, light fn
                 #endif
             #endif
             }
@@ -3387,10 +3414,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 case KCTL_LAYR:
                 #ifdef CONFIG_KCTL_LAYR_COLOR
                     rgb_matrix_set_color(I_LALT, CONFIG_KCTL_LAYR_COLOR);  // lalt
+                    #ifndef CONFIG_NO_RALT_KEY
                     rgb_matrix_set_color(I_RALT, CONFIG_KCTL_LAYR_COLOR);  // ralt
+                    #endif
                 #else
                     rgb_matrix_set_color(I_LALT, RGB_RED);    // lalt
+                    #ifndef CONFIG_NO_RALT_KEY
                     rgb_matrix_set_color(I_RALT, RGB_RED);    // ralt
+                    #endif
                 #endif
                     break;
                 case TMUX_LAYR:
@@ -3403,19 +3434,27 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 case WSYM_LAYR:
                     if (timer_elapsed(layer_timer) > 250) {
                     #ifdef CONFIG_ACCENT_KEY_COLOR
+                        #ifndef CONFIG_NO_RALT_KEY
                         rgb_matrix_set_color(I_RALT, CONFIG_ACCENT_KEY_COLOR); // ralt
+                        #endif
                         rgb_matrix_set_color(I_LGUI, CONFIG_ACCENT_KEY_COLOR); // lgui
                     #else
+                        #ifndef CONFIG_NO_RALT_KEY
                         rgb_matrix_set_color(I_RALT, RGB_YELLOW); // ralt
+                        #endif
                         rgb_matrix_set_color(I_LGUI, RGB_YELLOW); // lgui
                     #endif
                     }
                     else {
                     #ifdef CONFIG_SYM_LAYR_COLOR
+                        #ifndef CONFIG_NO_RALT_KEY
                         rgb_matrix_set_color(I_RALT, CONFIG_SYM_LAYR_COLOR);   // ralt
+                        #endif
                         rgb_matrix_set_color(I_LGUI, CONFIG_SYM_LAYR_COLOR);   // lgui
                     #else
+                        #ifndef CONFIG_NO_RALT_KEY
                         rgb_matrix_set_color(I_RALT, RGB_BLUE);   // ralt
+                        #endif
                         rgb_matrix_set_color(I_LGUI, RGB_BLUE);   // lgui
                     #endif
                     }
@@ -3427,14 +3466,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                         #ifdef CONFIG_HAS_ROPT_KEY
                         rgb_matrix_set_color(I_ROPT, CONFIG_ACCENT_KEY_COLOR); // ropt
                         #else
-                        rgb_matrix_set_color(I_FN, CONFIG_ACCENT_KEY_COLOR);   // if no ropt, light fn 
+                        rgb_matrix_set_color(I_FN, CONFIG_ACCENT_KEY_COLOR);   // if no ropt, light fn
                         #endif
                     #else
                         rgb_matrix_set_color(I_LOPT, RGB_YELLOW); // lopt
                         #ifdef CONFIG_HAS_ROPT_KEY
                         rgb_matrix_set_color(I_ROPT, RGB_YELLOW); // ropt
                         #else
-                        rgb_matrix_set_color(I_FN, RGB_YELLOW);   // if no ropt, light fn 
+                        rgb_matrix_set_color(I_FN, RGB_YELLOW);   // if no ropt, light fn
                         #endif
                     #endif
                     }
@@ -3444,14 +3483,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                         #ifdef CONFIG_HAS_ROPT_KEY
                         rgb_matrix_set_color(I_ROPT, CONFIG_SYM_LAYR_COLOR);   // ropt
                         #else
-                        rgb_matrix_set_color(I_FN, CONFIG_SYM_LAYR_COLOR);     // if no ropt, light fn 
+                        rgb_matrix_set_color(I_FN, CONFIG_SYM_LAYR_COLOR);     // if no ropt, light fn
                         #endif
                     #else
                         rgb_matrix_set_color(I_LOPT, RGB_BLUE);   // lopt
                         #ifdef CONFIG_HAS_ROPT_KEY
                         rgb_matrix_set_color(I_ROPT, RGB_BLUE);   // ropt
                         #else
-                        rgb_matrix_set_color(I_FN, RGB_BLUE);     // if no ropt, light fn 
+                        rgb_matrix_set_color(I_FN, RGB_BLUE);     // if no ropt, light fn
                         #endif
                     #endif
                     }
@@ -3472,14 +3511,26 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                     break;
                 case EMO_LAYR:
                 #ifdef CONFIG_EMO_LAYR_COLOR
+                    #ifndef CONFIG_NO_RCMD_KEY
                     rgb_matrix_set_color(I_RCMD, CONFIG_EMO_LAYR_COLOR);      // rcmd
+                    #endif
                     #ifdef CONFIG_HAS_ROPT_KEY
                     rgb_matrix_set_color(I_ROPT, CONFIG_EMO_LAYR_COLOR);      // ropt
+                    #else
+                    #ifndef CONFIG_NO_RCTL_KEY
+                    rgb_matrix_set_color(I_RCTL, CONFIG_EMO_LAYR_COLOR);      // rctl
+                    #endif
                     #endif
                 #else
+                    #ifndef CONFIG_NO_RCMD_KEY
                     rgb_matrix_set_color(I_RCMD, RGB_YELLOW);     // rcmd
+                    #endif
                     #ifdef CONFIG_HAS_ROPT_KEY
                     rgb_matrix_set_color(I_ROPT, RGB_YELLOW);     // ropt
+                    #else
+                    #ifndef CONFIG_NO_RCTL_KEY
+                    rgb_matrix_set_color(I_RCTL, RGB_YELLOW);     // rctl
+                    #endif
                     #endif
                 #endif
                     break;
@@ -3658,9 +3709,11 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if (rsft_locked) {
                 rgb_matrix_set_color(I_RSFT, 0x77, 0x77, 0x77);       // rsft
             }
+            #ifndef CONFIG_NO_RALT_KEY
             if (ralt_locked) {
                 rgb_matrix_set_color(I_RALT, 0x77, 0x77, 0x77);       // ralt
             }
+            #endif
             #ifndef CONFIG_NO_RCTL_KEY
             if (rctl_locked) {
                 rgb_matrix_set_color(I_RCTL, 0x77, 0x77, 0x77);       // rctl
@@ -3673,13 +3726,13 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         if (base_layer_changed_in_group) {
             if (!base_change_timer || timer_elapsed(base_change_timer) > 1300) {
                 base_change_timer = timer_read();
-            } 
+            }
             rgb_matrix_set_color(I_BASECHG1, RGB_WHITE);             // home/insert
             if (timer_elapsed(base_change_timer) > 300) {
                 rgb_matrix_set_color(I_BASECHG2, RGB_WHITE);         // pgup/del
             }
             if (timer_elapsed(base_change_timer) > 600) {
-                rgb_matrix_set_color(I_BASECHG3, RGB_WHITE);        // pgdn/pgup 
+                rgb_matrix_set_color(I_BASECHG3, RGB_WHITE);        // pgdn/pgup
             }
             if (timer_elapsed(base_change_timer) > 900) {
                 rgb_matrix_set_color(I_BASECHG4, RGB_WHITE);         // end/pgdn
@@ -3687,7 +3740,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if (timer_elapsed(base_change_timer) > 1200) {
                 base_layer_changed_in_group = false;
             }
-        }   
+        }
     #endif
         // check if os change happened, and flash some indicators to show the change
         if (os_changed) {
@@ -3953,7 +4006,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             if (wireless_get_state() == WT_CONNECTED) {
                 // host_index is set to 24 for 2.4g, bt is 1,2,3
             #if defined(CONFIG_KCLK_24G_HOST_IDX) && defined(CONFIG_KCLK_BT_KEY_START_IDX)
-                rgb_matrix_set_color(wireless_get_host_index() == CONFIG_KCLK_24G_HOST_IDX 
+                rgb_matrix_set_color(wireless_get_host_index() == CONFIG_KCLK_24G_HOST_IDX
                     ? I_N4
                     : wireless_get_host_index() + CONFIG_KCLK_BT_KEY_START_IDX, RGB_WHITE);
             #else
@@ -3991,7 +4044,11 @@ int cur_dance (tap_dance_state_t *state) {
             return DOUBLE_HOLD;
         }
     } else if (state->count == 3) {
-        return TRIPLE_TAP;
+        if (!state->pressed) {
+            return TRIPLE_TAP;
+        } else {
+            return TRIPLE_HOLD;
+        }
     } else if (state->count == 4) {
         return QUAD_TAP;
     } else if (state->count == 5) {
@@ -3999,7 +4056,7 @@ int cur_dance (tap_dance_state_t *state) {
     } else if (state->count == 6) {
         return HEXA_TAP;
     }
-    else return 9;
+    else return 10;
 }
 
 // initialize tap structure associated with each tap dance key
@@ -4060,6 +4117,10 @@ static tap lopt_tap_state = {
     .state = 0
 };
 static tap ropt_tap_state = {
+    .is_press_action = true,
+    .state = 0
+};
+static tap rctl_tap_state = {
     .is_press_action = true,
     .state = 0
 };
@@ -4245,6 +4306,11 @@ void fn_finished (tap_dance_state_t *state, void *user_data) {
                 layer_on(WSYM_LAYR);
             }
             break;
+    #ifdef CONFIG_NO_RCTL_KEY
+        case TRIPLE_HOLD:
+            register_code(KC_RCTL);
+            break;
+    #endif
     }
 }
 
@@ -4272,6 +4338,11 @@ void fn_reset (tap_dance_state_t *state, void *user_data) {
                 }
             }
             break;
+    #ifdef CONFIG_NO_RCTL_KEY
+        case TRIPLE_HOLD:
+            unregister_code(KC_RCTL);
+            break;
+    #endif
     }
     fn_tap_state.state = 0;
 }
@@ -4361,7 +4432,6 @@ void kbunlock_finished (tap_dance_state_t *state, void *user_data) {
             break;
         case TRIPLE_TAP:
             layer_off(LOCK_LAYR); // three taps unlocks the LOCK_LAYR
-            user_config.raw = eeconfig_read_user();
             rgb_matrix_mode(user_config.rgb_mode);
             break;
         case SINGLE_HOLD:
@@ -4943,6 +5013,48 @@ void ropt_reset (tap_dance_state_t *state, void *user_data) {
     ropt_tap_state.state = 0;
 }
 
+// function for rctl tap dance
+void rctl_finished (tap_dance_state_t *state, void *user_data) {
+    rctl_tap_state.state = cur_dance(state);
+    switch (rctl_tap_state.state) {
+        case SINGLE_TAP:
+            set_oneshot_layer(KCTL_LAYR, ONESHOT_START);
+            clear_oneshot_layer_state(ONESHOT_PRESSED);
+            break;
+        case SINGLE_HOLD:
+            register_code(KC_RCTL);
+            break;
+        case DOUBLE_TAP:
+            if (is_mac_base()) {
+                set_oneshot_layer(EMO_LAYR, ONESHOT_START);
+                clear_oneshot_layer_state(ONESHOT_PRESSED);
+            }
+            break;
+        case DOUBLE_HOLD:
+            if (is_mac_base()) {    
+                layer_on(EMO_LAYR);
+            } 
+            break;
+    }
+}
+void rctl_reset (tap_dance_state_t *state, void *user_data) {
+    switch (rctl_tap_state.state) {
+        case SINGLE_TAP:
+            break;
+        case SINGLE_HOLD:
+            unregister_code(KC_RCTL);
+            break;
+        case DOUBLE_TAP:
+            break;
+        case DOUBLE_HOLD:
+            if (is_mac_base() && !is_layer_locked(EMO_LAYR)) {
+                layer_off(EMO_LAYR);
+            }
+            break;
+    }
+    rctl_tap_state.state = 0;
+}
+
 // function for macl tap dance
 void macl_finished (tap_dance_state_t *state, void *user_data) {
     macl_tap_state.state = cur_dance(state);
@@ -4968,7 +5080,7 @@ void macl_reset (tap_dance_state_t *state, void *user_data) {
 }
 
 // associate the tap dance keys with their funcitons
-tap_dance_action_t tap_dance_actions[16] = {
+tap_dance_action_t tap_dance_actions[17] = {
     [CAPS_LAYR] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, caps_finished, caps_reset),
     [FN_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [RALT_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ralt_finished, ralt_reset),
@@ -4984,9 +5096,9 @@ tap_dance_action_t tap_dance_actions[16] = {
     [RCMD_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rcmd_finished, rcmd_reset),
     [LOPT_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lopt_finished, lopt_reset),
     [ROPT_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ropt_finished, ropt_reset),
+    [RCTL_OSL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, rctl_finished, rctl_reset),
     [MOUSE_ACCEL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, macl_finished, macl_reset)
 };
-const size_t tap_dance_actions_count = ARRAY_SIZE(tap_dance_actions);
 
 // accent tap dances should give a little bit longer to see the leds
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -5164,9 +5276,15 @@ bool key_should_fade(keytracker key, uint8_t layer) {
                                 #ifdef CONFIG_HAS_ROPT_KEY
                                  key.index == I_ROPT ||
                                 #endif
-                                 key.index == I_LCMD || key.index == I_RCMD)) ||                      // l/r alt cmd
+                                 key.index == I_LCMD
+                                #ifndef CONFIG_NO_RCMD_KEY
+                                 || key.index == I_RCMD
+                                #endif
+                                )) ||                                                                 // l/r alt cmd
         (macro_recording && (key.index == I_MREC1 || key.index == I_MREC2)) ||                        // macro recording keys
+#ifdef CONFIG_HAS_LLOCK_KEY
         (is_layer_locked(layer) && key.index == I_LLOCK) ||                                           // layer lock key
+#endif
         (is_in_leader_sequence && key.index == I_LEAD) ||                                             // leader key
         (layer == SFT_LAYR && (key.index == I_NUMLOCK || key.index == I_MHLD)) ||                     // num lock, mouse hold
         (layer == FN_LAYR && key.index == I_SLOCK) ||                                                 // scroll lock
@@ -5181,20 +5299,29 @@ bool key_should_fade(keytracker key, uint8_t layer) {
                                 || key.index == I_FJLIGHT2
 #endif
 #ifdef CONFIG_HAS_SECOND_HROWLIGHT_KEY
-                                || key.index == I_HROWLIGHT2 
+                                || key.index == I_HROWLIGHT2
 #endif
                                 )) ||                                                                 // ktrack/hrow/fj indicators
         (layer == KCTL_LAYR && (key.index >= I_N1 && key.index <= I_N4)) ||                           // wireless mode keys
         (os_changed) ||                                                                               // mac/win/lin change
         (layer == WSYM_LAYR && (key.index == I_GRV || key.index == I_N1 || key.index == I_E ||
                                 key.index == I_I || key.index == I_U || key.index == I_N ||           // accent keys
-                                key.index == I_RALT || key.index == I_LGUI)) ||                       // sym_layr ralt, lgui
+                            #ifndef CONFIG_NO_RALT_KEY
+                                key.index == I_RALT ||
+                            #endif
+                                key.index == I_LGUI)) ||                                              // sym_layr ralt, lgui
 #ifdef CONFIG_HAS_ROPT_KEY
         (layer == MSYM_LAYR && (key.index == I_LOPT || key.index == I_ROPT)) ||                       // sym_layr lopt, ropt
-        (layer == EMO_LAYR && (key.index == I_RCMD || key.index == I_ROPT)) ||                        // emo_layr rcmd, rpot
+        (layer == EMO_LAYR && (
+                            #ifndef CONFIG_NO_RCMD_KEY
+                                key.index == I_RCMD ||
+                            #endif
+                                 key.index == I_ROPT)) ||                                             // emo_layr rcmd, rpot
 #else
         (layer == MSYM_LAYR && key.index == I_LOPT) ||                                                // sym_layr lopt, ropt
+    #ifndef CONFIG_NO_RCMD_KEY
         (layer == EMO_LAYR && key.index == I_RCMD) ||                                                 // emo_layr rcmd, rpot
+    #endif
 #endif
         (key.index == I_CAPS || key.index == I_FN || key.index == I_TAB)) {                           // caps lock, fn, tab
             should_fade = false;
@@ -5289,7 +5416,7 @@ uint32_t wireless_mode_callback(uint32_t trigger_time, void *cb_arg) {
 #endif
 
 // setup to store vars when macro recording starts or ends. then can flash some rgb
-#ifdef KEYBOARD_IS_BRIDGE
+#if defined(KEYBOARD_IS_BRIDGE) || defined(KEYBOARD_IS_YUNZII)
 bool dynamic_macro_record_start_user(int8_t direction) {
 #else
 void dynamic_macro_record_start_user(int8_t direction) {
@@ -5297,11 +5424,11 @@ void dynamic_macro_record_start_user(int8_t direction) {
     macro_direction = direction;
     macro_recording = true;
     macro_timer = timer_read();
-#ifdef KEYBOARD_IS_BRIDGE
+#if defined(KEYBOARD_IS_BRIDGE) || defined(KEYBOARD_IS_YUNZII)
     return true;
 #endif
 }
-#ifdef KEYBOARD_IS_BRIDGE
+#if defined(KEYBOARD_IS_BRIDGE) || defined(KEYBOARD_IS_YUNZII)
 bool dynamic_macro_record_end_user(int8_t direction) {
 #else
 void dynamic_macro_record_end_user(int8_t direction) {
@@ -5316,12 +5443,12 @@ void dynamic_macro_record_end_user(int8_t direction) {
             tracked_keys[i].fade = 0;
         }
     }
-#ifdef KEYBOARD_IS_BRIDGE
+#if defined(KEYBOARD_IS_BRIDGE) || defined(KEYBOARD_IS_YUNZII)
     return true;
 #endif
 }
 // this is so the macro key lights don't get stuck when i play the macro
-#ifdef KEYBOARD_IS_BRIDGE
+#if defined(KEYBOARD_IS_BRIDGE) || defined(KEYBOARD_IS_YUNZII)
 bool dynamic_macro_play_user(int8_t direction) {
 #else
 void dynamic_macro_play_user(int8_t direction) {
@@ -5332,7 +5459,7 @@ void dynamic_macro_play_user(int8_t direction) {
             tracked_keys[i].fade = 0;
         }
     }
-#ifdef KEYBOARD_IS_BRIDGE
+#if defined(KEYBOARD_IS_BRIDGE) || defined(KEYBOARD_IS_YUNZII)
     return true;
 #endif
 }
