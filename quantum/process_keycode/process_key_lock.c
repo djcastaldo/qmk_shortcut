@@ -62,6 +62,7 @@ bool lalt_locked = false;
 bool lsft_locked = false;
 bool ralt_locked = false;
 bool rsft_locked = false;
+bool rctl_locked = false;
 
 // Translate any OSM keycodes back to their unmasked versions.
 static inline uint16_t translate_keycode(uint16_t keycode) {
@@ -152,6 +153,9 @@ bool process_key_lock(uint16_t *keycode, keyrecord_t *record) {
                 else if (translated_keycode == KC_RSFT) {
                     rsft_locked = true;
                 }
+                if (translated_keycode == KC_RCTL) {
+                    rctl_locked = true;
+                }
                 SET_KEY_STATE(translated_keycode);
                 // We need to set the keycode passed in to be the translated keycode, in case we
                 // translated a OSM back to the original keycode.
@@ -183,6 +187,9 @@ bool process_key_lock(uint16_t *keycode, keyrecord_t *record) {
                 }
                 else if (translated_keycode == KC_RSFT) {
                     rsft_locked = false;
+                }
+                if (translated_keycode == KC_RCTL) {
+                    rctl_locked = false;
                 }
                 // The key is already held, stop this process. The up event will be sent when the user
                 // releases the key.

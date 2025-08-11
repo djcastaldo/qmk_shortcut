@@ -60,3 +60,60 @@
 #define RGB_MATRIX_DEFAULT_VAL 220
 #define RGB_MATRIX_DEFAULT_SPD 80
 
+/* for tmux send_string delays */
+#    define TMUX_DELAY 10
+
+/* monitored base layers for macos */
+#    define CONFIG_MACOS_BASE_LAYERS { MAC_BASE2_LAYR, MAC_BASE_LAYR }
+#    define CONFIG_MACOS_BASE_LAYERS_COUNT 2
+#    define CONFIG_DEFAULT_MAC_LAYR MAC_BASE2_LAYR
+#    define CONFIG_DEFAULT_WIN_LAYR BASE2_LAYR
+
+#    define CONFIG_MAC_BASE_CHANGE_GROUP { MAC_BASE_LAYR, MAC_BASE2_LAYR }
+#    define CONFIG_MAC_BASE_CHANGE_GROUP_COUNT 2
+#    define CONFIG_WIN_BASE_CHANGE_GROUP { BASE_LAYR, BASE2_LAYR }
+#    define CONFIG_WIN_BASE_CHANGE_GROUP_COUNT 2
+
+/* monitored base layers for macos */
+#    define CONFIG_ALL_BASE_LAYERS { BASE2_LAYR, MAC_BASE2_LAYR, BASE_LAYR, MAC_BASE_LAYR }
+#    define CONFIG_ALL_BASE_LAYERS_COUNT 4
+
+/* key indexes that changed to shifted version when caps is used */
+#    define CONFIG_CAPSLOCK_SHIFTED ((i > 29 && i < 40) || (i > 44 && i < 54) || (i > 58 && i < 66))
+#    define CONFIG_CAPSWORD_EXTRA (i == 25)
+
+/* keyfade settings */
+#    define CONFIG_KEYFADE_START_DELAY 10
+#    define CONFIG_KEYFADE_START_VAL 119
+#    define CONFIG_KEYFADE_CALLBACK_INTERVAL 12
+
+/* rgb_matrix_indicators_advanced_user settings */
+#    define CONFIG_NO_RCTL_KEY
+#    define CONFIG_RGB_LAYER_INDICATORS { I_INDICATOR }
+#    define CONFIG_RGB_LAYER_INDICATORS_COUNT 1
+#    define CONFIG_HAS_LLOCK_KEY
+#    define CONFIG_FN_LAYR_COLOR RGB_GREEN
+#    define CONFIG_MREC_KEY_COLOR RGB_MAGENTA
+#    define CONFIG_SHIFT_LAYR_COLOR RGB_ORANGE
+#    define CONFIG_KCTL_LAYR_COLOR RGB_RED
+#    define CONFIG_TMUX_LAYR_COLOR RGB_CYAN
+#    define CONFIG_SYM_LAYR_COLOR RGB_BLUE
+#    define CONFIG_WIDE_LAYR_COLOR RGB_PURPLE
+#    define CONFIG_CIRC_LAYR_COLOR RGB_CORAL
+#    define CONFIG_EMO_LAYR_COLOR RGB_YELLOW
+#    define CONFIG_DEFUALT_LAYR_COLOR 0x77,0x77,0x77
+#    define CONFIG_EXTRA_BASE_LAYR_COLORS \
+     { \
+         { I_CAPS, RGB_BLUE }, \
+         { I_FN, RGB_BLUE }, \
+         { I_TAB, 0x77, 0x77, 0x77 }, \
+     }
+#    define CONFIG_EXTRA_BASE_LAYR_COLORS_COUNT 3
+#    define CONFIG_ACCENT_KEY_COLOR RGB_YELLOW
+#    define CONFIG_CAPS_WORD_SHIFT_COLOR 0x77,0x77,0x77
+#    define CONFIG_HROWLIGHT_COLOR RGB_GREEN
+#    define CONFIG_FJLIGHT_COLOR RGB_WHITE
+#    define CONFIG_LEADER_COLORA RGB_TURQUOISE
+#    define CONFIG_LEADER_COLORB RGB_CYAN
+#    define CONFIG_KEYLIGHT_STD_COLOR RGB_WHITE
+#    define CONFIG_EEPROM_RESET_DEFAULT_LAYER BASE2_LAYR

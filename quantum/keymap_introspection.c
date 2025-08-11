@@ -10,7 +10,10 @@
 #endif // INTROSPECTION_KEYMAP_C
 
 #include "keymap_introspection.h"
+#include "users/djcastaldo/process_record_userspace.h"
 #include "util.h"
+// djc modifiied
+//extern const size_t tap_dance_actions_count;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Key mapping
@@ -123,6 +126,7 @@ __attribute__((weak)) combo_t* combo_get(uint16_t combo_idx) {
 
 uint16_t tap_dance_count_raw(void) {
     return ARRAY_SIZE(tap_dance_actions);
+    //return tap_dance_actions_count; // djc: modified
 }
 
 __attribute__((weak)) uint16_t tap_dance_count(void) {
