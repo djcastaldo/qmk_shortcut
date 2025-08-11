@@ -2931,6 +2931,7 @@ bool process_leader_userspace(void) {
         rgb_matrix_mode(RGB_MATRIX_BAND_VAL);
         layer_on(LOCK_LAYR);
     }
+#if defined(CONFIG_MAC_BASE_CHANGE_GROUP) || defined(CONFIG_WIN_BASE_CHANGE_GROUP)
     else if (leader_sequence_four_keys(KC_B, KC_A, KC_S, KC_E)) { // change base within a base group
         if (is_mac_base()) {
             if (mac_base_change_group_count > 0) {
@@ -2967,6 +2968,7 @@ bool process_leader_userspace(void) {
             }
         }
     }
+#endif
     else if (leader_sequence_two_keys(KC_L, KC_K)) {              // key lock watch for key to lock
         set_key_lock_watching();
     }
