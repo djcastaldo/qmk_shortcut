@@ -63,6 +63,7 @@
             "rainbow_beacon": false,
             "raindrops": false,
             "pixel_rain": true,
+            "digital_rain": true,
             "solid_reactive_simple": false,
             "solid_reactive": false,
             "solid_reactive_multinexus": true,
