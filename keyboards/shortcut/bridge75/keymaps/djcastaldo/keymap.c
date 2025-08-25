@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE_LAYR] = LAYOUT_ansi(
         DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9, KC_F10, KC_F11, DUAL_F12,     KC_DEL,
         KC_GRV,  KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0, KC_MINS, KC_EQL,   BSPCFAST,     KC_HOME,
-        LT(TMUX_LAYR,KC_TAB),  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y,   KC_U,   KC_I,   KC_O,   KC_P, KC_LBRC, KC_RBRC, KC_BSLS,   KC_PGUP,
+        LT(TMUX_LAYR,KC_TAB),  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y,  KC_U,  KC_I,  KC_O,  KC_P, KC_LBRC, KC_RBRC, TD(DYN_LAYR),  KC_PGUP,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,    KC_K,  KC_L,  KC_SCLN, KC_QUOT,    KC_ENT,     KC_PGDN,
         KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP,  KC_END,
         KC_LCTL, TD(LGUI_OSL), KC_LALT,                   KC_SPC,                   TD(RALT_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE2_LAYR] = LAYOUT_ansi(
         DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,   DUAL_F13,
         KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,      KC_INS,
-        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,    KC_I,  KC_O,   KC_P, KC_LBRC, KC_RBRC,  KC_BSLS,   KC_DEL,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,  KC_I,  KC_O,  KC_P, KC_LBRC, KC_RBRC, TD(DYN_LAYR),  KC_DEL,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGUP,
         KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_PGDN,
         KC_LCTL, TD(LGUI_OSL), KC_LALT,                   KC_SPC,                   TD(RALT_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE_LAYR] = LAYOUT_ansi(
         DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,      KC_F9, KC_F10, KC_F11, DUAL_F12,     KC_DEL,
         KC_GRV,  KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0, KC_MINS, KC_EQL,   BSPCFAST,     KC_HOME,
-        LT(TMUX_LAYR,KC_TAB),  KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y,   KC_U,   KC_I,   KC_O,   KC_P, KC_LBRC, KC_RBRC, KC_BSLS,   KC_PGUP,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P,KC_LBRC,KC_RBRC, LT(EMO_LAYR,KC_BSLS), KC_PGUP,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,    KC_K,  KC_L,  KC_SCLN, KC_QUOT,    KC_ENT,     KC_PGDN,
         KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP,  KC_END,
         KC_LCTL, TD(LOPT_OSL), KC_LCMD,                   KC_SPC,                   TD(RCMD_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
@@ -119,7 +119,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE2_LAYR] = LAYOUT_ansi(
         DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,   DUAL_F13,
         KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,      KC_INS,
-        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,    KC_I,  KC_O,   KC_P, KC_LBRC, KC_RBRC,  KC_BSLS,   KC_DEL,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y, KC_U, KC_I, KC_O, KC_P,KC_LBRC,KC_RBRC, LT(EMO_LAYR,KC_BSLS), KC_DEL,
         TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGUP,
         KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_PGDN,
         KC_LCTL, TD(LOPT_OSL), KC_LCMD,                   KC_SPC,                   TD(RCMD_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
@@ -227,6 +227,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,        _______,LTRANS,LTRANS, _______,_______,_______,_______,_______, LTRANS, LTRANS, LTRANS,     _______,   LTRANS,
         _______,          LTRANS, LTRANS, LTRANS, _______,_______, LTRANS, _______,LTRANS,LTRANS,LTRANS,    _______,  LTRANS, _______,
         _______,    _______,  KC_LALT,                      LTRANS,                      KC_LALT,  _______,  LTRANS,  LTRANS,  LTRANS
+    ),
+
+//  [VS_LAYR] (purple)
+// ,------------------------------------------------------------------------------------------------------------------------------------,
+// :   ______      ______________________________      ______________________________      ______________________________      ______   :
+// :  |      |    |Rename||      ||      ||  F4  |    |  F5  ||      ||      ||  F8  |    |  F9  || F10  || F11  || F12  |    |LLock |  :
+// :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
+// :   ______________________________________________________________________________________________________________________________   :
+// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||              || InsL |  :
+// :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
+// :  |          ||      ||WrdWrp||ErrLst||Replce||      ||      ||LUncom|| Info ||Output||Publsh||      ||MatchB||          ||LinDel|  :
+// :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
+// :  |             ||      ||LnSort||DupeLn|| Find ||GotoLn||      ||LnJoin||      ||SolExp||      ||      ||               ||LineUp|  :
+// :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
+// :  |                 ||      ||      ||LComnt||ClipBd||      ||Notify||      ||      ||      ||Coment||           ||      ||LineDn|  :
+// :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
+// :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
+// :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
+// `------------------------------------------------------------------------------------------------------------------------------------`
+    [VS_LAYR] = LAYOUT_ansi(
+        _______, _______, VSRNAME, _______, KC_F4,     KC_F5, _______, _______, KC_F8,      KC_F9,  KC_F10,  KC_F11, KC_F12,      LLOCK,
+        _______, _______,_______,_______,_______,_______,_______,_______, _______, _______, _______, _______, _______, _______, VSINSLN,
+        _______,  _______, VSWRDWP, VSERR, VSREPL, _______,_______, VSLNCMU, VSINFO ,VSOUTPT, VSPUB, _______, VSMATCH, _______, VSDELLN,
+        _______,       _______, VSLNSRT, VSDUPLN, VSFIND, VSGOTO, _______, VSLJOIN, _______, VSSOLU, _______, _______, _______, VSMVLNU,
+        _______,        _______,_______, VSLNCMC, VSCLIPB, _______, VSNOTIF, _______,_______,_______, VSLBCMT, _______,_______, VSMVLND,
+        _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
     ),
 
 //  [WSYM_LAYR] (blue)

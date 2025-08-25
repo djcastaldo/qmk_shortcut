@@ -56,6 +56,7 @@ enum key_indexes {
     I_P = 39,
     I_MREC1 = 40,
     I_MREC2 = 41,
+    I_BSLS = 42,
     I_DELPGUP = 43,
     I_BASECHG2 = 43,
     I_BARTEXT = 43,
