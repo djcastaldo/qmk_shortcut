@@ -88,6 +88,8 @@
 #    define CONFIG_KEYFADE_START_DELAY 10
 #    define CONFIG_KEYFADE_START_VAL 119
 #    define CONFIG_KEYFADE_CALLBACK_INTERVAL 12
+#    define CONFIG_RDP_DELAY_KEY 15    // ms between key press/release
+#    define CONFIG_RDP_DELAY_MOD 20    // ms for modifiers
 
 /* rgb_matrix_indicators_advanced_user settings */
 #    define CONFIG_NO_RCTL_KEY
