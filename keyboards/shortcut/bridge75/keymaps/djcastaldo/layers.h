@@ -8,6 +8,7 @@ enum layers {
     BASE2_LAYR,
     MAC_BASE_LAYR,
     MAC_BASE2_LAYR,
+    CLCK_LAYR,
     FN_LAYR,
     SFT_LAYR,
     KCTL_LAYR,
