@@ -7,6 +7,7 @@
 #ifdef WIRELESS_ENABLE
 #    include "wireless.h"
 #endif
+#include "process_record_userspace.h"
 
 typedef union {
     uint32_t raw;
@@ -92,6 +93,10 @@ void usb_power_disconnect(void) {
 }
 
 void suspend_power_down_kb(void) {
+    // djc: prevent turn off in battery drain mode
+    if (battery_drain_mode) {
+        return;
+    }
 
 #    ifdef LED_POWER_EN_PIN
     gpio_write_pin_high(LED_POWER_EN_PIN);
