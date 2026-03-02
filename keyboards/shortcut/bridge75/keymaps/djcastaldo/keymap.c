@@ -163,9 +163,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 // :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead ||      || PScr ||               ||HomIns|  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  | MO(SFT)         ||      ||Rout  ||Acct  ||      ||      ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      ||EndDel|  :
+// :  | MO(SFT)         ||      ||Rout  ||Acct  ||DPW   ||SDFCU ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      ||EndDel|  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-// :  |         || WM_SYM || MO(CTL) || Space                                        || MO(CTL) ||         |  |      ||      ||      |  :
+// :  |         || WM_SYM || MO(CTL) ||                                              || MO(CTL) ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [FN_LAYR] = LAYOUT_ansi(
@@ -173,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,_______,_______,_______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,  _______,   KC_SCRL,
         MO(TMUX_LAYR),SECRET3,SECRET2,SECRET1,SECRET8,SECRET9,_______,_______,_______,_______,_______,DM_REC1, DM_REC2, _______, _______,
         _______,SECRET4,SECRET5,SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, _______, KC_PSCR,        _______, KC_HOME,
-        MO(SFT_LAYR),_______,SECRET10,SECRET11,_______,_______,_______,_______,DM_PLY1, DM_PLY2, KC_PAUS, MO(SFT_LAYR), _______,  KC_END,
+        MO(SFT_LAYR),_______,SECRET10,SECRET11,SECRET12,SECRET13,_______,_______,DM_PLY1,DM_PLY2,KC_PAUS, MO(SFT_LAYR), _______,  KC_END,
         _______,  WM_SYM, MO(KCTL_LAYR),                 _______,                   MO(KCTL_LAYR), _______,    _______, _______, _______
     ),
 
@@ -187,20 +187,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
 // :  |Menu      ||QLook ||Inspct||Hide  ||      ||Time  ||      ||  P7  ||  P8  ||  P9  || +  - ||CursrL||CursrR||TOverview ||      |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||Apps  ||Siri  ||      ||Finder||      ||      ||  P4  ||  P5  ||  P6  || *  / ||      ||               ||MSHold|  :
+// :  |             ||Apps  ||Siri  ||Docs  ||Finder||Home  ||      ||  P4  ||  P5  ||  P6  || *  / ||      ||               ||MSHold|  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 // :  |                 ||MSAcl2||      ||      ||      ||      ||      ||  P1  ||  P2  ||  P3  ||Stat  ||   LClk    || MSUp || RClk |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-// :  |         ||        || MSAcl0  ||                       P0                     ||   P.    ||   LClk  |  |MSLft || MSDn ||MSRgt |  :
+// :  |         ||        || MSAcl0  ||                       P0                     ||   P.    ||         |  |MSLft || MSDn ||MSRgt |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [SFT_LAYR] = LAYOUT_ansi(
         WM_QUIT,KC_MYCM, WM_DLS, KC_CALC, KC_APP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_MUTE, KC_VOLD, KC_VOLU,          LLOCK,
         _______,WM_SOC1,WM_SOC2,WM_SOC3,WM_SOC4, WM_SOC5, WM_SOC6, WM_SOC7, WM_SOC8, WM_SOC9, WM_SOC0, KC_BRID, KC_BRIU, _______, KC_NUM,
-        KC_APP, FQLOOK,FINSPECT,FVHIDDEN,_______,TIMESTAMP,_______,KC_P7, KC_P8, KC_P9, DUAL_PLUSMIN, CURSORL,CURSORR,TOVERVIEW, _______,
-        _______,FAPPS,WM_SIRCAT,_______,NEWFINDER,_______,_______, KC_P4, KC_P5, KC_P6, DUAL_MULTDIV, _______,         _______,  MK_HOLD,
-        _______,MK_ACCEL2, _______,_______,_______,_______,_______, KC_P1, KC_P2, KC_P3, FSTATBAR,      KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2,
-        _______,_______, MK_ACCEL0,                     KC_P0,                  KC_PDOT, KC_MS_BTN1, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
+        KC_APP,WM_QLOOK,WM_INSPECT,WM_VHIDDEN,_______,WM_TIME,_______,KC_P7,KC_P8,KC_P9,DUAL_PLUSMIN, CURSORL,CURSORR, WM_OVIEW, _______,
+        _______,WM_APPS,WM_SIRCAT,WM_DOCS,WM_MYCM,KC_MYCM,_______, KC_P4, KC_P5, KC_P6, DUAL_MULTDIV, _______,         _______,  MK_HOLD,
+        _______,MK_ACCEL2, _______,_______,_______,_______,_______, KC_P1, KC_P2, KC_P3, WM_STATB,      KC_MS_BTN1, KC_MS_UP, KC_MS_BTN2,
+        _______,_______, MK_ACCEL0,                      KC_P0,                    KC_PDOT, _______, KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT
     ),
 
 //  [KCTL_LAYR] (red)
