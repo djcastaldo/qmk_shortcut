@@ -50,27 +50,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [BASE2_LAYR]
 // ,------------------------------------------------------------------------------------------------------------------------------------,
 // :   ______      ______________________________      ______________________________      ______________________________      ______   :
-// :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || F12  |    | DF13 |  :
+// :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || F12  |    | LPad |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
-// :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    ||Insert|  :
+// :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    ||Delete|  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        ||Delete|  :
+// :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        || PgUp |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  | TD(CAPS)    || A    || S    || D    || F    || G    || H    || J    || K    || L    || ;    || '    || Enter         || PgUp |  :
+// :  | TD(CAPS)    || A    || S    || D    || F    || G    || H    || J    || K    || L    || ;    || '    || Enter         || PgDn |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  | LShift          || Z    || X    || C    || V    || B    || N    || M    || ,    || .    || /    ||TD(RSFT)   || Up   || PgDn |  :
+// :  | LShift          || Z    || X    || C    || V    || B    || N    || M    || ,    || .    || /    ||TD(RSFT)   || Up   ||TD(FN)|  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-// :  | Ctrl    ||TD(GUI) || Alt     || Space                                        ||TD(RALT) ||TD(FN)   |  | Left || Down || Rght |  :
+// :  | Ctrl    ||TD(GUI) || Alt     || Space                                        ||TD(RALT) || RCtrl   |  | Left || Down || Rght |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [BASE2_LAYR] = LAYOUT_ansi(
-        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,   DUAL_F13,
-        KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,      KC_INS,
-        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,  KC_I,  KC_O,  KC_P, KC_LBRC, KC_RBRC, TD(DYN_LAYR),  KC_DEL,
-        TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGUP,
-        KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_PGDN,
-        KC_LCTL, TD(LGUI_OSL), KC_LALT,                   KC_SPC,                   TD(RALT_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
+        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,    KC_LPAD,
+        KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,      KC_DEL,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y,   KC_U,  KC_I,  KC_O,  KC_P, KC_LBRC, KC_RBRC, TD(DYN_LAYR), KC_PGUP,
+        TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGDN,
+        KC_LSFT,         KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, TD(FN_OSL),
+        KC_LCTL, TD(LGUI_OSL), KC_LALT,                     KC_SPC,                    TD(RALT_OSL), KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
     ),
 
 //  [MAC_BASE_LAYR]
@@ -102,27 +102,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //  [MAC_BASE2_LAYR]
 // ,------------------------------------------------------------------------------------------------------------------------------------,
 // :   ______      ______________________________      ______________________________      ______________________________      ______   :
-// :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || F12  |    | DF13 |  :
+// :  |D_Esc |    | F1   || F2   || F3   || F4   |    | F5   || F6   || F7   || F8   |    | F9   || F10  || F11  || F12  |    | F14  |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
-// :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    ||Insert|  :
+// :  | `    || 1    || 2    || 3    || 4    || 5    || 6    || 7    || 8    || 9    || 0    || -    || =    || Backspace    ||Delete|  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        ||Delete|  :
+// :  | LT(TMUX) || Q    || W    || E    || R    || T    || Y    || U    || I    || O    || P    || [    || ]    || \        || PgUp |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  | TD(CAPS)    || A    || S    || D    || F    || G    || H    || J    || K    || L    || ;    || '    || Enter         || PgUp |  :
+// :  | TD(CAPS)    || A    || S    || D    || F    || G    || H    || J    || K    || L    || ;    || '    || Enter         || PgDn |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  | LShift          || Z    || X    || C    || V    || B    || N    || M    || ,    || .    || /    ||TD(RSFT)   || Up   || PgDn |  :
+// :  | LShift          || Z    || X    || C    || V    || B    || N    || M    || ,    || .    || /    ||TD(RSFT)   || Up   ||TD(FN)|  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-// :  | Ctrl    ||TR(LOPT)|| Command || Space                                        ||TD(RCMD) ||TD(FN)   |  | Left || Down || Rght |  :
+// :  | Ctrl    ||TR(LOPT)|| Command || Space                                        ||TD(RCMD) || RCtrl   |  | Left || Down || Rght |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [MAC_BASE2_LAYR] = LAYOUT_ansi(
-        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,   DUAL_F13,
-        KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,      KC_INS,
-        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y, KC_U, KC_I, KC_O, KC_P,KC_LBRC,KC_RBRC, LT(EMO_LAYR,KC_BSLS), KC_DEL,
-        TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGUP,
-        KC_LSFT,            KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, KC_PGDN,
-        KC_LCTL, TD(LOPT_OSL), KC_LCMD,                   KC_SPC,                   TD(RCMD_OSL), TD(FN_OSL), KC_LEFT, KC_DOWN, KC_RGHT
+        DUAL_ESC,   KC_F1,  KC_F2,  KC_F3,  KC_F4,      KC_F5,  KC_F6,  KC_F7,  KC_F8,       KC_F9,  KC_F10, KC_F11, KC_F12,     KC_F14,
+        KC_GRV,  KC_1,  KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,    KC_8,  KC_9,   KC_0,  KC_MINS, KC_EQL,   BSPCFAST,      KC_DEL,
+        LT(TMUX_LAYR,KC_TAB), KC_Q, KC_W, KC_E, KC_R, KC_T,  KC_Y, KC_U, KC_I, KC_O, KC_P,KC_LBRC,KC_RBRC, LT(EMO_LAYR,KC_BSLS),KC_PGUP,
+        TD(CAPS_LAYR),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L, KC_SCLN, KC_QUOT,    KC_ENT,      KC_PGDN,
+        KC_LSFT,         KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,  KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(RSFT_OSL), KC_UP, TD(FN_OSL),
+        KC_LCTL, TD(LOPT_OSL), KC_LCMD,                     KC_SPC,                    TD(RCMD_OSL), KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
     ),
 
 //  [CLCK_LAYR]
@@ -157,30 +157,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |      |    |      ||      ||ViRepl||      |    |ChkOut||      ||      ||GitLog|    |GitAdd||Commit||      || Push |    |LLock |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
-// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||Arrow || Wave ||              ||SLock |  :
+// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||Arrow || Wave ||              ||Insert|  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  | MO(TMUX) ||WMail2||WMail1||Mail  ||RPhone||WPhone||      ||      ||      ||      ||      || Rec1 || Rec2 ||          ||      |  :
+// :  | MO(TMUX) ||WMail2||WMail1||Mail  ||RPhone||WPhone||      ||      ||      ||      ||      || Rec1 || Rec2 ||          || Home |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead ||      || PScr ||               ||HomIns|  :
+// :  |             ||Addr  ||City  ||ZIP   ||Phone ||      ||      ||      ||      || Lead || SLck || PScr ||               || End  |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  | MO(SFT)         ||      ||Rout  ||Acct  ||DPW   ||SDFCU ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      ||EndDel|  :
+// :  | MO(SFT)         ||      ||Rout  ||Acct  ||DPW   ||SDFCU ||      ||      || Ply1 || Ply2 ||Pause || MO(SFT)   ||      ||      |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 // :  |         || WM_SYM || MO(CTL) ||                                              || MO(CTL) ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [FN_LAYR] = LAYOUT_ansi(
         _______,_______,_______, VI_REPLACE,_______, GIT_CHKOUT, _______,_______, GIT_LOG, GIT_ADD, GIT_COMMIT,_______, GIT_PUSH,  LLOCK,
-        _______,_______,_______,_______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,  _______,   KC_SCRL,
-        MO(TMUX_LAYR),SECRET3,SECRET2,SECRET1,SECRET8,SECRET9,_______,_______,_______,_______,_______,DM_REC1, DM_REC2, _______, _______,
-        _______,SECRET4,SECRET5,SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, _______, KC_PSCR,        _______, KC_HOME,
-        MO(SFT_LAYR),_______,SECRET10,SECRET11,SECRET12,SECRET13,_______,_______,DM_PLY1,DM_PLY2,KC_PAUS, MO(SFT_LAYR), _______,  KC_END,
+        _______,_______,_______,_______, _______, _______, _______, _______, _______, _______, _______, ARROW, WAVE,   _______,   KC_INS,
+        MO(TMUX_LAYR),SECRET3,SECRET2,SECRET1,SECRET8,SECRET9,_______,_______,_______,_______,_______,DM_REC1, DM_REC2, _______, KC_HOME,
+        _______,SECRET4,SECRET5,SECRET6, SECRET7, _______, _______, _______, _______, QK_LEAD, KC_SCRL, KC_PSCR,        _______,  KC_END,
+        MO(SFT_LAYR),_______,SECRET10,SECRET11,SECRET12,SECRET13,_______,_______,DM_PLY1,DM_PLY2,KC_PAUS, MO(SFT_LAYR), _______, _______,
         _______,  WM_SYM, MO(KCTL_LAYR),                 _______,                   MO(KCTL_LAYR), _______,    _______, _______, _______
     ),
 
 //  [SFT_LAYR] (orange)
 // ,------------------------------------------------------------------------------------------------------------------------------------,
 // :   ______      ______________________________      ______________________________      ______________________________      ______   :
-// :  |Quit  |    |MyComp||Dwnlds|| Calc || Menu |    |      || Prev || Play || Next |    |      || Mute || Vol- || Vol+ |    |LLock |  :
+// :  |Quit  |    |MyComp||Dwnlds|| Calc || Apps |    |      || Prev || Play || Next |    |      || Mute || Vol- || Vol+ |    |LLock |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
 // :  |      ||SOC1  ||SOC2  ||SOC3  ||SOC4  ||SOC5  ||SOC6  ||SOC7  ||SOC8  ||SOC9  ||SOC0  ||BriD  ||BriU  ||              || Num  |  :
@@ -195,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [SFT_LAYR] = LAYOUT_ansi(
-        WM_QUIT,KC_MYCM, WM_DLS, KC_CALC, KC_APP, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_MUTE, KC_VOLD, KC_VOLU,          LLOCK,
+        WM_QUIT,KC_MYCM, WM_DLS, KC_CALC, KC_LPAD, _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_MUTE, KC_VOLD, KC_VOLU,         LLOCK,
         _______,WM_SOC1,WM_SOC2,WM_SOC3,WM_SOC4, WM_SOC5, WM_SOC6, WM_SOC7, WM_SOC8, WM_SOC9, WM_SOC0, KC_BRID, KC_BRIU, _______, KC_NUM,
         KC_APP,WM_QLOOK,WM_INSPECT,WM_VHIDDEN,_______,WM_TIME,_______,KC_P7,KC_P8,KC_P9,DUAL_PLUSMIN, CURSORL,CURSORR, WM_OVIEW, _______,
         _______,WM_APPS,WM_SIRCAT,WM_DOCS,WM_MYCM,KC_MYCM,_______, KC_P4, KC_P5, KC_P6, DUAL_MULTDIV, _______,         _______,  MK_HOLD,
@@ -261,23 +261,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |      |    |      ||Rename||      ||  F4  |    |  F5  ||      ||      ||  F8  |    |  F9  || F10  || F11  || F12  |    |LLock |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
-// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||              || InsL |  :
+// :  |      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      ||      || InsL ||              ||LinDel|  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  |          ||      ||WrdWrp||ErrLst||Rename||      ||      ||LUncom|| Info ||Output||Publsh||      ||MatchB||          ||LinDel|  :
+// :  |          ||      ||WrdWrp||ErrLst||Rename||      ||      ||LUncom|| Info ||Output||Publsh||      ||MatchB||          ||LineUp|  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||      ||LnSort||DupeLn|| Find ||GotoLn||Replce||LnJoin||      ||SolExp||      ||      ||               ||LineUp|  :
+// :  |             ||      ||LnSort||DupeLn|| Find ||GotoLn||Replce||LnJoin||      ||SolExp||      ||      ||               ||LineDn|  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  |                 ||      ||      ||LComnt||ClipBd||      ||Notify||      ||      ||      ||Coment||           ||      ||LineDn|  :
+// :  |                 ||      ||      ||LComnt||ClipBd||      ||Notify||      ||      ||      ||Coment||           ||      ||      |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 // :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [VS_LAYR] = LAYOUT_ansi(
         _______, _______, VSRNAME, _______, KC_F4,     KC_F5, _______, _______, KC_F8,      KC_F9,  KC_F10,  KC_F11, KC_F12,      LLOCK,
-        _______, _______,_______,_______,_______,_______,_______,_______, _______, _______, _______, _______, _______, _______, VSINSLN,
-        _______,  _______, VSWRDWP, VSERR, VSRNAME, _______,_______,VSLNCMU, VSINFO ,VSOUTPT, VSPUB, _______, VSMATCH, _______, VSDELLN,
-        _______,       _______, VSLNSRT, VSDUPLN, VSFIND, VSGOTO, VSREPL, VSLJOIN, _______, VSSOLU, _______, _______, _______,  VSMVLNU,
-        _______,        _______,_______, VSLNCMC, VSCLIPB, _______, VSNOTIF, _______,_______,_______, VSLBCMT, _______,_______, VSMVLND,
+        _______, _______,_______,_______,_______,_______,_______,_______, _______, _______, _______, _______, VSINSLN, _______, VSDELLN,
+        _______,  _______, VSWRDWP, VSERR, VSRNAME, _______,_______,VSLNCMU, VSINFO ,VSOUTPT, VSPUB, _______, VSMATCH, _______, VSMVLNU,
+        _______,       _______, VSLNSRT, VSDUPLN, VSFIND, VSGOTO, VSREPL, VSLJOIN, _______, VSSOLU, _______, _______, _______,  VSMVLND,
+        _______,        _______,_______, VSLNCMC, VSCLIPB, _______, VSNOTIF, _______,_______,_______, VSLBCMT, _______,_______, _______,
         _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
     ),
 
@@ -293,17 +293,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 // :  |             ||OPTA  ||OPTS  ||OPTD  ||OPTF  ||OPTG  ||OPTH  ||OPTJ  ||OPTK  ||OPTL  ||OPTSEM||OPTAPO||               ||      |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  |                 ||OPTZ  ||OPTX  ||OPTC  ||OPTV  ||OPTB  ||TD(N) ||OPTM  ||OPTCOM||OPTDOT||OPTSLS||           ||      ||      |  :
+// :  |                 ||OPTZ  ||OPTX  ||OPTC  ||OPTV  ||OPTB  ||TD(N) ||OPTM  ||OPTCOM||OPTDOT||OPTSLS||           ||      || Uni  |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 // :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [WSYM_LAYR] = LAYOUT_ansi(
         _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLI, _______, _______, NBSP,        LLOCK,
-        TD(ACT_GRV), TD(ACT_1), OPT2, OPT3, OPT4, OPT5,  OPT6,   OPT7,  OPT8,   OPT9,  OPT0,   OPTMIN,  OPTEQ,     _______, ENC_UNIMENU,
+        TD(ACT_GRV), TD(ACT_1), OPT2, OPT3, OPT4, OPT5,  OPT6,   OPT7,  OPT8,   OPT9,  OPT0,   OPTMIN,  OPTEQ,         _______, _______,
         _______,    OPTQ,  OPTW, TD(ACT_E), OPTR,  OPTT,   OPTY, TD(ACT_U), TD(ACT_I), OPTO, OPTP,  OPTLBR,  OPTRBR, OPTBSL,    _______,
         _______,        OPTA,  OPTS,  OPTD,  OPTF,   OPTG,     OPTH,   OPTJ,   OPTK,   OPTL,   OPTSEM, OPTAPO,      _______,    _______,
-        _______,           OPTZ,  OPTX,  OPTC,   OPTV,   OPTB, TD(ACT_N),  OPTM,   OPTCOM,  OPTDOT, OPTSLS,   _______, _______, _______,
+        _______,       OPTZ,  OPTX,  OPTC,   OPTV,   OPTB, TD(ACT_N),  OPTM,   OPTCOM,  OPTDOT, OPTSLS,   _______, _______, ENC_UNIMENU,
         _______,    _______,  _______,                      _______,                    _______,   _______,   _______, _______, _______
     ),
 
@@ -320,17 +320,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
 // :  |             ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||               ||      |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  |    LShift       ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||  RShift   ||      ||      |  :
+// :  |    LShift       ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||  RShift   ||      || Uni  |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 // :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [MSYM_LAYR] = LAYOUT_ansi(
         _______,     SUP1,   SUP2,   SUP3, _______,     SUITH,  SUITD,  SUITC,  SUITS,     CIRCLI, _______, _______, NBSP,        LLOCK,
-        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,   _______, ENC_UNIMENU,
+        LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,       _______, _______,
         _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______,
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
-        KC_LSFT,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    KC_RSFT, _______, _______,
+        KC_LSFT,       LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    KC_RSFT, _______, ENC_UNIMENU,
         _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
     ),
 
@@ -342,11 +342,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :   ______________________________________________________________________________________________________________________________   :
 // :  |LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||BBrTxt|  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||BarTxt|  :
+// :  |          ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS    ||SThru |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||               ||SThru |  :
+// :  |             ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||               ||UnderL|  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  |                 ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||           ||      ||UnderL|  :
+// :  |                 ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||           ||      ||BarTxt|  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 // :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
@@ -354,9 +354,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [WIDE_LAYR] = LAYOUT_ansi(
         _______, _______, _______, _______, _______,  _______, _______, _______, _______,  _______, _______, _______, _______,    LLOCK,
         LTRANS,  LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      _______,  BBRTEXT,
-        _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    BARTEXT,
-        _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,     STHRU,
-        _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, UNDERLN,
+        _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,      STHRU,
+        _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   UNDERLN,
+        _______,           LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______, _______, BARTEXT,
         _______,  _______,  _______,                        LTRANS,                      _______,  _______,   _______, _______, _______
     ),
 
@@ -392,23 +392,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |      |    |Ehand ||ESnail||EStop ||EPack |    |Pizza ||Burger||Chick ||Taco  |    |ESmile||ESmirk||EAston||ESad  |    |LLock |  :
 // :  |______|    |______||______||______||______|    |______||______||______||______|    |______||______||______||______|    |______|  :
 // :   ______________________________________________________________________________________________________________________________   :
-// :  |      ||  E1  ||  E2  ||  E3  ||  E4  ||  E5  ||  E6  ||  E7  ||  E8  ||  E9  ||  E0  ||  E-  ||  E+  ||              ||ECheck|  :
+// :  |      ||  E1  ||  E2  ||  E3  ||  E4  ||  E5  ||  E6  ||  E7  ||  E8  ||  E9  ||  E0  ||  E-  ||  E+  ||              || EDel |  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  |          ||      || Car  || Bus  ||Train || Taxi ||      ||  US  ||  EI  || EOK  ||  PI  ||      ||      ||          || EDel |  :
+// :  |          ||      || Car  || Bus  ||Train || Taxi ||      ||  US  ||  EI  || EOK  ||  PI  ||      ||      ||          ||EMark |  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||Aster ||Sungls||      ||      ||Globe || Hash ||      || Keyb ||EBulb ||      ||ESShot||               ||EMark |  :
+// :  |             ||Aster ||Sungls||      ||      ||Globe || Hash ||      || Keyb ||EBulb ||      ||ESShot||               ||QMark |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
-// :  |                 ||EShh  ||      ||      ||      ||Bottle||Ninja || EMic ||      || Grim || Div  ||           || EUp  ||QMark |  :
+// :  |                 ||EShh  ||      ||      ||      ||Bottle||Ninja || EMic ||      || Grim || Div  ||           || EUp  ||CMark |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
 // :  |         ||        ||         ||                                              ||         ||         |  |ELeft ||EDown ||ERght |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [EMO_LAYR] = LAYOUT_ansi(
         _______, E_HAND, E_SNAIL, E_STOP, E_PACKAGE,  E_PIZZA, E_BURGER, E_CHICKEN, E_TACO,  E_SMILE, E_SMIRK, E_ASTON, E_SAD,    LLOCK,
-        _______,  E_K1,   E_K2,   E_K3,   E_K4,   E_K5,   E_K6,   E_K7,   E_K8,   E_K9,   E_K0,   E_MINS, E_PLUS,      _______, E_CMARK,
-        _______,     _______, E_CAR, E_BUS, E_TRAIN, E_TAXI, _______, E_FLAGUS, E_I ,E_OK, E_FLAGPI, _______, _______, _______, E_TRASH,
-        _______,       E_STAR, E_SGLASS, _______, _______, E_GLOBE, E_HASH, _______, E_KB, E_BULB, _______, E_SSHOT,   _______, E_EMARK,
-        _______,        E_SHH, _______, _______, _______, E_BOTTLE, E_NINJA, E_MIC, _______, E_GRIM, E_DIV, _______, E_POINTU,  E_QMARK,
+        _______,  E_K1,   E_K2,   E_K3,   E_K4,   E_K5,   E_K6,   E_K7,   E_K8,   E_K9,   E_K0,   E_MINS, E_PLUS,      _______, E_TRASH,
+        _______,     _______, E_CAR, E_BUS, E_TRAIN, E_TAXI, _______, E_FLAGUS, E_I ,E_OK, E_FLAGPI, _______, _______, _______, E_EMARK,
+        _______,       E_STAR, E_SGLASS, _______, _______, E_GLOBE, E_HASH, _______, E_KB, E_BULB, _______, E_SSHOT,   _______, E_QMARK,
+        _______,        E_SHH, _______, _______, _______, E_BOTTLE, E_NINJA, E_MIC, _______, E_GRIM, E_DIV, _______, E_POINTU,  E_CMARK,
         _______,  _______,  _______,                       _______,                    _______,  _______,  E_POINTL, E_POINTD, E_POINTR
     ),
 

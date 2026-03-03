@@ -92,7 +92,7 @@
 #    define CONFIG_RDP_DELAY_MOD 20    // ms for modifiers
 
 /* rgb_matrix_indicators_advanced_user settings */
-#    define CONFIG_NO_RCTL_KEY
+//#    define CONFIG_NO_RCTL_KEY
 #    define CONFIG_HAS_LLOCK_KEY
 #    define CONFIG_RGB_LAYER_INDICATORS { I_INDICATOR }
 #    define CONFIG_RGB_LAYER_INDICATORS_COUNT 1
