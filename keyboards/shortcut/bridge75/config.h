@@ -136,5 +136,5 @@
 #    define CONFIG_CUSTOM_BLINK_INTERVAL 250
 #    define CONFIG_CUSTOM_BT_TURN_OFF_DELAY 10000
 
-/* for process_key_sequence */
-#    define CONFIG_MAX_SEQ_QUEUE 4
+// for key sequnece processing
+#    define CONFIG_MAX_SEQ_QUEUE 5
