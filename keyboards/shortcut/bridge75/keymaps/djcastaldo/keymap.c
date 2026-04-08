@@ -237,9 +237,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :   ______________________________________________________________________________________________________________________________   :
 // :  |      ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||              ||      |  :
 // :  |______||______||______||______||______||______||______||______||______||______||______||______||______||______________||______|  :
-// :  |          ||LTRANS||LTRANS||      ||      ||LTRANS||      ||      ||      ||LTRANS||LTRANS||LTRANS||LTRANS||          ||      |  :
+// :  |          ||LTRANS||LTRANS||      ||      ||LTRANS||      ||      ||      ||LTRANS||LTRANS||LTRANS||LTRANS||          ||LTRANS|  :
 // :  |__________||______||______||______||______||______||______||______||______||______||______||______||______||__________||______|  :
-// :  |             ||      ||LTRANS||LTRANS||      ||      ||      ||      ||      ||LTRANS||LTRANS||LTRANS||               ||LTRANS|  :
+// :  |             ||      ||LTRANS||LTRANS||      ||      ||      ||      ||      ||LTRANS||LTRANS||LTRANS||               ||      |  :
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 // :  |                 ||LTRANS||LTRANS||LTRANS||      ||      ||LTRANS||      ||LTRANS||LTRANS||LTRANS||           ||LTRANS||      |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
@@ -249,8 +249,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [TMUX_LAYR] = LAYOUT_ansi(
         _______, TMUXLKEY, TMUXLCMD, _______, _______,  TMONON, TMONOF, TVISON, TVISOF,  TJPANE, _______, TWINLFT, TWINRGT,     LLOCK,
         _______, LTRANS,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,  _______,
-        _______,    LTRANS,LTRANS, _______,_______,LTRANS,_______,_______,_______,LTRANS, LTRANS, LTRANS, LTRANS, _______,    _______,
-        _______,        _______,LTRANS,LTRANS, _______,_______,_______,_______,_______, LTRANS, LTRANS, LTRANS,     _______,   LTRANS,
+        _______,    LTRANS,LTRANS, _______,_______,LTRANS,_______,_______,_______,LTRANS, LTRANS, LTRANS, LTRANS, _______,     LTRANS,
+        _______,        _______,LTRANS,LTRANS, _______,_______,_______,_______,_______, LTRANS, LTRANS, LTRANS,     _______,  _______,
         _______,          LTRANS, LTRANS, LTRANS, _______,_______, LTRANS, _______,LTRANS,LTRANS,LTRANS,    _______,  LTRANS, _______,
         _______,    _______,  KC_LALT,                      LTRANS,                      KC_LALT,  _______,  LTRANS,  LTRANS,  LTRANS
     ),
