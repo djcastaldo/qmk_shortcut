@@ -295,7 +295,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 // :  |                 ||OPTZ  ||OPTX  ||OPTC  ||OPTV  ||OPTB  ||TD(N) ||OPTM  ||OPTCOM||OPTDOT||OPTSLS||           ||      || Uni  |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-// :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
+// :  |         ||        ||TD(SUIT) ||                                              ||TD(SUP)  ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [WSYM_LAYR] = LAYOUT_ansi(
@@ -304,7 +304,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,    OPTQ,  OPTW, TD(ACT_E), OPTR,  OPTT,   OPTY, TD(ACT_U), TD(ACT_I), OPTO, OPTP,  OPTLBR,  OPTRBR, OPTBSL,    _______,
         _______,        OPTA,  OPTS,  OPTD,  OPTF,   OPTG,     OPTH,   OPTJ,   OPTK,   OPTL,   OPTSEM, OPTAPO,      _______,    _______,
         _______,       OPTZ,  OPTX,  OPTC,   OPTV,   OPTB, TD(ACT_N),  OPTM,   OPTCOM,  OPTDOT, OPTSLS,   _______, _______, ENC_UNIMENU,
-        _______,    _______,  _______,                      _______,                    _______,   _______,   _______, _______, _______
+        _______,    _______,  TD(SUIT_CYCLE),               _______,              TD(SUP_CYCLE),   _______,   _______, _______, _______
     ),
 
 
@@ -322,7 +322,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // :  |_____________||______||______||______||______||______||______||______||______||______||______||______||_______________||______|  :
 // :  |    LShift       ||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||LTRANS||  RShift   ||      || Uni  |  :
 // :  |_________________||______||______||______||______||______||______||______||______||______||______||___________||______||______|  :
-// :  |         ||        ||         ||                                              ||         ||         |  |      ||      ||      |  :
+// :  |         ||        ||TD(SUIT) ||                                              ||TD(SUP)  ||         |  |      ||      ||      |  :
 // :  |_________||________||_________||______________________________________________||_________||_________|  |______||______||______|  :
 // `------------------------------------------------------------------------------------------------------------------------------------`
     [MSYM_LAYR] = LAYOUT_ansi(
@@ -331,7 +331,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,     LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS ,LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    _______,
         _______,         LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,     _______,   _______,
         KC_LSFT,       LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS, LTRANS,    KC_RSFT, _______, ENC_UNIMENU,
-        _______,  _______,  _______,                        _______,                      _______,  _______,  _______, _______, _______
+        _______,  _______,  TD(SUIT_CYCLE),                 _______,                TD(SUP_CYCLE),  _______,  _______, _______, _______
     ),
 
 //  [WIDE_LAYR] (purple)
